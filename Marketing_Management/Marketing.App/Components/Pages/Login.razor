@@ -1,0 +1,102 @@
+﻿@page "/"
+
+@using Marketing.App.Security
+@using Marketing.Application.Interfaces
+@using Microsoft.AspNetCore.Components.Authorization
+
+
+@inject IAccountService AccountService
+
+@inject CustomAuthProvider CustomAuth
+@inject NavigationManager Navigation
+@inject Radzen.NotificationService NotificationService
+
+
+<RadzenRow Gap="0" class="rz-my-12 rz-mx-auto rz-border-radius-6 rz-shadow-10" Style="width: 100%; max-width: 800px; overflow: hidden;">
+	<RadzenColumn Size="12" SizeMD="6">
+		<RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-text-align-center rz-p-12"
+					Style="height: 100%; background: linear-gradient(160deg, #00ff41 0%, #003300 100%); color: #ffffff;">
+			<RadzenText TextStyle="TextStyle.DisplayH5" TagName="TagName.H2" class="rz-color-white rz-mb-6">Welcome To</RadzenText>
+			<RadzenText TextStyle="TextStyle.DisplayH3" class="rz-color-white">Marketing Managment</RadzenText>
+			<RadzenText TextStyle="TextStyle.Body1" class="rz-color-white">manage your customers.</RadzenText>
+		</RadzenCard>
+	</RadzenColumn>
+	<RadzenColumn Size="12" SizeMD="6">
+
+		<RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-p-12">
+			<RadzenText TextStyle="TextStyle.H5" TagName="TagName.H2" class="rz-mb-6">
+				Login
+			</RadzenText>
+			@if (!string.IsNullOrEmpty(ErroMessage))
+			{
+				<p style="color:red">@ErroMessage</p>
+			}
+			<EditForm Model="Logindto" FormName="FormLogin" OnSubmit="HandleLogin">
+				<DataAnnotationsValidator />
+				<ValidationSummary />
+				<div>
+					<RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Username</RadzenText>
+					<RadzenTextBox @bind-Value="Logindto.Username" Style="width: 100%" aria-label="Default TextBox" />
+
+				</div>
+
+				<div>
+					<RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Password</RadzenText>
+					<RadzenPassword @bind-Value="Logindto.Password" Style="width: 100%" AutoComplete="false" aria-label="enter password" />
+				</div>
+
+				<div style="margin-top: 30px">
+					<RadzenButton Text="Login" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" />
+				</div>
+			</EditForm>
+			<div class="rz-p-12 rz-text-align-center">
+				<RadzenLink @onclick="NavigatePage" Text="Go to register" />
+			</div>
+
+		</RadzenCard>
+
+	</RadzenColumn>
+</RadzenRow>
+
+@code {
+	[SupplyParameterFromForm]
+	private LoginDto Logindto { get; set; } = new();
+
+	private string? ErroMessage { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+
+		// await CustomAuth.GetAuthenticationStateAsync();
+		// await base.OnInitializedAsync();
+	}
+
+
+	public async Task HandleLogin()
+	{
+		try
+		{
+			var user = await AccountService.ValidadeUserAsync(Logindto.Username.ToLower(), Logindto.Password);
+
+			if (user != null)
+			{
+
+				await CustomAuth.MarkUserAsAuthenticated(user.Username, user.Roles);
+
+				Navigation.NavigateTo("/companies");
+			}
+		}
+		catch (UnauthorizedAccessException)
+		{
+			ErroMessage = "Username or password invalid!";
+		}
+	}
+
+
+	public void NavigatePage()
+	{
+		Navigation.NavigateTo("/register");
+	}
+
+
+}

@@ -1,0 +1,102 @@
+﻿@page "/register"
+
+@using Marketing.Application.DTOs
+@using Marketing.Application.Interfaces
+@using Marketing.App.Security
+
+@inject IAccountService AccountService
+@inject NavigationManager Navigation
+@inject Radzen.NotificationService notification
+
+<RadzenRow Gap="0" class="rz-my-12 rz-mx-auto rz-border-radius-6 rz-shadow-10" Style="width: 100%; max-width: 800px; overflow: hidden;">
+    <RadzenColumn Size="12" SizeMD="6">
+        <RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-text-align-center rz-p-12"
+                    Style="height: 100%; background: linear-gradient(160deg, #00ff41 0%, #003300 100%); color: #ffffff;">
+            <RadzenText TextStyle="TextStyle.DisplayH5" TagName="TagName.H2" class="rz-color-white rz-mb-6">Welcome To</RadzenText>
+            <RadzenText TextStyle="TextStyle.DisplayH3" class="rz-color-white">Marketing Managment</RadzenText>
+            <RadzenText TextStyle="TextStyle.Body1" class="rz-color-white">manage your customers.</RadzenText>
+        </RadzenCard>
+    </RadzenColumn>
+    <RadzenColumn Size="12" SizeMD="6">
+        <RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-p-12">
+            <RadzenText TextStyle="TextStyle.H5" TagName="TagName.H2" class="rz-mb-6">
+                Register
+            </RadzenText>
+            <EditForm Model="registerDto" FormName="RegisterForm" OnSubmit="HandleRegister">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div>
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Username</RadzenText>
+                    <RadzenTextBox @bind-Value="registerDto.Username" Style="width: 100%" aria-label="Default TextBox" />
+                </div>
+
+                <div>
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Email</RadzenText>
+                    <RadzenTextBox @bind-Value="registerDto.Email" Style="width: 100%" aria-label="Default TextBox" />
+                </div>
+
+                <div>
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Password</RadzenText>
+                    <RadzenPassword @bind-Value="registerDto.Password" Style="width: 100%" AutoComplete="false" aria-label="enter password" />
+                </div>
+                <div>
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Confirm Password</RadzenText>
+                    <RadzenPassword @bind-Value="registerDto.ConfirmPassword" Style="width: 100%" AutoComplete="false" aria-label="enter password" />
+                </div>
+
+                <div style="margin-top: 30px">
+                    <RadzenButton ButtonType="ButtonType.Submit" Text="Register" ButtonStyle="ButtonStyle.Primary" />
+                </div>
+            </EditForm>
+            <div class="rz-p-12 rz-text-align-center">
+                <RadzenLink @onclick="NavigatePage" Text="Go to login" />
+            </div>
+        </RadzenCard>
+    </RadzenColumn>
+</RadzenRow>
+
+
+@code {
+    [SupplyParameterFromForm]
+    private RegisterDto registerDto { get; set; } = new();
+
+    protected override void OnInitialized() => registerDto ??= new();
+
+
+    public async Task HandleRegister()
+    {
+        try
+        {
+            var existUser = await AccountService.GetUserAsync(registerDto.Username.ToLower());
+            var existEmail = await AccountService.GetEmailAsync(registerDto.Email);
+
+            if (existUser != null)
+            {
+                notification.Notify(Radzen.NotificationSeverity.Error, "Erro", "Username already exists!");
+                return;
+            }
+
+            if (existEmail != null)
+            {
+                notification.Notify(Radzen.NotificationSeverity.Error, "Erro", "E-mail already exists!");
+                return;
+            }
+
+            await AccountService.RegisterAsync(registerDto);
+            registerDto = new();
+            Navigation.NavigateTo("/");
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error Register: " + ex);
+        }
+    }
+
+
+    public void NavigatePage()
+    {
+        Navigation.NavigateTo("/");
+    }
+}

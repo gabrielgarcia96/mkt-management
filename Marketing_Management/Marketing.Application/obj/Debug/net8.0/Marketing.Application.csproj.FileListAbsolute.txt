@@ -1,0 +1,17 @@
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\bin\Debug\net8.0\Marketing.Application.deps.json
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\bin\Debug\net8.0\Marketing.Application.dll
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\bin\Debug\net8.0\Marketing.Application.pdb
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\bin\Debug\net8.0\Marketing.Domain.dll
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\bin\Debug\net8.0\Marketing.Infrastructure.dll
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\bin\Debug\net8.0\Marketing.Infrastructure.pdb
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\bin\Debug\net8.0\Marketing.Domain.pdb
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\obj\Debug\net8.0\Marketing.Application.csproj.AssemblyReference.cache
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\obj\Debug\net8.0\Marketing.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\obj\Debug\net8.0\Marketing.Application.AssemblyInfoInputs.cache
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\obj\Debug\net8.0\Marketing.Application.AssemblyInfo.cs
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\obj\Debug\net8.0\Marketing.Application.csproj.CoreCompileInputs.cache
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\obj\Debug\net8.0\Marketin.42503E14.Up2Date
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\obj\Debug\net8.0\Marketing.Application.dll
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\obj\Debug\net8.0\refint\Marketing.Application.dll
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\obj\Debug\net8.0\Marketing.Application.pdb
+C:\Users\gabriel.garcia\source\repos\Marketing_Management\Marketing.Application\obj\Debug\net8.0\ref\Marketing.Application.dll
