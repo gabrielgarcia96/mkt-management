@@ -1,26 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\",
+  "WorkspaceRootPath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|c:\\users\\gabriel.garcia\\source\\repos\\marketing_management\\marketing.app\\security\\customauthprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|solutionrelative:marketing.app\\security\\customauthprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|c:\\users\\gabriel.garcia\\source\\github\\mkt-management\\marketing_management\\marketing.app\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|solutionrelative:marketing.app\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|c:\\users\\gabriel.garcia\\source\\repos\\marketing_management\\marketing.app\\components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|solutionrelative:marketing.app\\components\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|c:\\users\\gabriel.garcia\\source\\github\\mkt-management\\marketing_management\\marketing.app\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|solutionrelative:marketing.app\\components\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{25B12B2D-EA1D-43F1-84F3-80C8BEFB180A}|Marketing.Application\\Marketing.Application.csproj|c:\\users\\gabriel.garcia\\source\\repos\\marketing_management\\marketing.application\\services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{25B12B2D-EA1D-43F1-84F3-80C8BEFB180A}|Marketing.Application\\Marketing.Application.csproj|solutionrelative:marketing.application\\services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{142A1CAC-A181-4EA4-9202-4042138E6706}|Marketing.Domain\\Marketing.Domain.csproj|c:\\users\\gabriel.garcia\\source\\repos\\marketing_management\\marketing.domain\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{142A1CAC-A181-4EA4-9202-4042138E6706}|Marketing.Domain\\Marketing.Domain.csproj|solutionrelative:marketing.domain\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|c:\\users\\gabriel.garcia\\source\\repos\\marketing_management\\marketing.app\\components\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|solutionrelative:marketing.app\\components\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|c:\\users\\gabriel.garcia\\source\\github\\mkt-management\\marketing_management\\marketing.app\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|solutionrelative:marketing.app\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,65 +31,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CustomAuthProvider.cs",
-              "DocumentMoniker": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\Security\\CustomAuthProvider.cs",
-              "RelativeDocumentMoniker": "Marketing.App\\Security\\CustomAuthProvider.cs",
-              "ToolTip": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\Security\\CustomAuthProvider.cs",
-              "RelativeToolTip": "Marketing.App\\Security\\CustomAuthProvider.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAA/wCEAAABNAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T19:37:54.715Z",
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Components\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "Marketing.App\\Components\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Components\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "Marketing.App\\Components\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAACsAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T20:26:42.456Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.Domain\\Models\\User.cs",
-              "RelativeDocumentMoniker": "Marketing.Domain\\Models\\User.cs",
-              "ToolTip": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.Domain\\Models\\User.cs",
-              "RelativeToolTip": "Marketing.Domain\\Models\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T19:22:05.393Z",
+              "DocumentIndex": 1,
+              "Title": "App.razor",
+              "DocumentMoniker": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Components\\App.razor",
+              "RelativeDocumentMoniker": "Marketing.App\\Components\\App.razor",
+              "ToolTip": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Components\\App.razor",
+              "RelativeToolTip": "Marketing.App\\Components\\App.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-16T20:25:27.432Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "AccountService.cs",
-              "DocumentMoniker": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.Application\\Services\\AccountService.cs",
-              "RelativeDocumentMoniker": "Marketing.Application\\Services\\AccountService.cs",
-              "ToolTip": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.Application\\Services\\AccountService.cs",
-              "RelativeToolTip": "Marketing.Application\\Services\\AccountService.cs",
-              "ViewState": "AgIAAB0AAAAAAAAAAADwvykAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T19:21:09.557Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Register.razor",
-              "DocumentMoniker": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\Components\\Pages\\Register.razor",
-              "RelativeDocumentMoniker": "Marketing.App\\Components\\Pages\\Register.razor",
-              "ToolTip": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\Components\\Pages\\Register.razor",
-              "RelativeToolTip": "Marketing.App\\Components\\Pages\\Register.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAACDAAAAAAAAAA==",
+              "Title": "Routes.razor",
+              "DocumentMoniker": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Components\\Routes.razor",
+              "RelativeDocumentMoniker": "Marketing.App\\Components\\Routes.razor",
+              "ToolTip": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Components\\Routes.razor",
+              "RelativeToolTip": "Marketing.App\\Components\\Routes.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-16T19:16:11.73Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Login.razor",
-              "DocumentMoniker": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\Components\\Pages\\Login.razor",
-              "RelativeDocumentMoniker": "Marketing.App\\Components\\Pages\\Login.razor",
-              "ToolTip": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\Components\\Pages\\Login.razor",
-              "RelativeToolTip": "Marketing.App\\Components\\Pages\\Login.razor",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAAAE4AAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-16T19:14:42.58Z",
+              "WhenOpened": "2025-04-16T20:25:22.316Z",
               "EditorCaption": ""
             }
           ]

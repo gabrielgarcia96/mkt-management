@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GqeH81bsNtMcp8i/S/b4K9m7LiVNopQLeE6/W0RlcHE=",
+  "Hash": "HFdpZxGAV2aJxuI6fEQdcXYoTXu3mPWtUlNn1lIgqmA=",
   "Source": "Marketing.App",
   "BasePath": "_content/Marketing.App",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "Marketing.App\\wwwroot",
       "Source": "Marketing.App",
-      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\",
       "BasePath": "_content/Marketing.App",
       "Pattern": "**"
     }
@@ -773,10 +773,10 @@
       "OriginalItemSpec": "C:\\Users\\gabriel.garcia\\.nuget\\packages\\radzen.blazor\\6.6.1\\staticwebassets\\Radzen.Blazor.min.js"
     },
     {
-      "Identity": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Marketing.App.styles.css",
+      "Identity": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Marketing.App.styles.css",
       "SourceId": "Marketing.App",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/Marketing.App",
       "RelativePath": "Marketing.App#[.{fingerprint}]?.styles.css",
       "AssetKind": "All",
@@ -791,13 +791,13 @@
       "Integrity": "eSv21CEoqUbCzSkwj6mGVWq2fgXmjrzR+BrGnPiTiH4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Marketing.App.styles.css"
+      "OriginalItemSpec": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Marketing.App.styles.css"
     },
     {
-      "Identity": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Marketing.App.bundle.scp.css",
+      "Identity": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Marketing.App.bundle.scp.css",
       "SourceId": "Marketing.App",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/Marketing.App",
       "RelativePath": "Marketing.App#[.{fingerprint}]!.bundle.scp.css",
       "AssetKind": "All",
@@ -812,13 +812,13 @@
       "Integrity": "eSv21CEoqUbCzSkwj6mGVWq2fgXmjrzR+BrGnPiTiH4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Marketing.App.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Marketing.App.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\app.css",
+      "Identity": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\app.css",
       "SourceId": "Marketing.App",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\",
       "BasePath": "_content/Marketing.App",
       "RelativePath": "app#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -836,10 +836,10 @@
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
-      "Identity": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css",
       "SourceId": "Marketing.App",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\",
       "BasePath": "_content/Marketing.App",
       "RelativePath": "bootstrap/bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -857,10 +857,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "Marketing.App",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\",
       "BasePath": "_content/Marketing.App",
       "RelativePath": "bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
       "AssetKind": "All",
@@ -878,10 +878,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\favicon.png",
+      "Identity": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\favicon.png",
       "SourceId": "Marketing.App",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\",
       "BasePath": "_content/Marketing.App",
       "RelativePath": "favicon#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -3854,7 +3854,7 @@
     },
     {
       "Route": "app.css",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\app.css",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3891,7 +3891,7 @@
     },
     {
       "Route": "app.da95v2qkru.css",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\app.css",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3936,7 +3936,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.bpk8xqwxhs.css",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3981,7 +3981,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4018,7 +4018,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.8inm30yfxf.map",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4063,7 +4063,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.map",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4100,7 +4100,7 @@
     },
     {
       "Route": "favicon.ifv42okdf2.png",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4145,7 +4145,7 @@
     },
     {
       "Route": "favicon.png",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4182,7 +4182,7 @@
     },
     {
       "Route": "Marketing.App.bundle.scp.css",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Marketing.App.bundle.scp.css",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Marketing.App.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4219,7 +4219,7 @@
     },
     {
       "Route": "Marketing.App.jpbph7ebej.bundle.scp.css",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Marketing.App.bundle.scp.css",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Marketing.App.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4264,7 +4264,7 @@
     },
     {
       "Route": "Marketing.App.jpbph7ebej.styles.css",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Marketing.App.styles.css",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Marketing.App.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -4309,7 +4309,7 @@
     },
     {
       "Route": "Marketing.App.styles.css",
-      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Marketing.App.styles.css",
+      "AssetFile": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Marketing.App.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {

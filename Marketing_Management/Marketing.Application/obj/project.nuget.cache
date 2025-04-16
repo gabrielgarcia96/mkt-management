@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "or8dTfXQhuY=",
+  "dgSpecHash": "8pdvaFQZb3s=",
   "success": true,
-  "projectFilePath": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.Application\\Marketing.Application.csproj",
+  "projectFilePath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\Marketing.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gabriel.garcia\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\gabriel.garcia\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",

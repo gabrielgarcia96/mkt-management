@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gkS/7uWsS6A=",
+  "dgSpecHash": "3JuAWga+Gf0=",
   "success": true,
-  "projectFilePath": "C:\\Users\\gabriel.garcia\\source\\repos\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj",
+  "projectFilePath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gabriel.garcia\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\gabriel.garcia\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\2.0.0\\microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",
