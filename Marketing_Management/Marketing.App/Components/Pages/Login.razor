@@ -4,6 +4,7 @@
 @using Marketing.Application.Interfaces
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using System.Text.Json
 
 
 @inject IAccountService AccountService
@@ -88,9 +89,10 @@
 
 				// Salva o token no storage local protegido
 				await localStorage.SetAsync("auth_token", token);
-				authService.SetLoggedIn(true);
-
+				authService.SetLoggedIn(true, user);
+				await localStorage.SetAsync("auth_user", JsonSerializer.Serialize(user));
 				// Navega para a próxima página
+				await Task.Delay(100);
 				Navigation.NavigateTo("/companies");
 			}
 		}

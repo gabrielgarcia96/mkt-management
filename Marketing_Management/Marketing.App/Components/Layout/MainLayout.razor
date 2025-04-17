@@ -1,6 +1,7 @@
 ﻿@using Marketing.App.Security
 ﻿﻿﻿@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using System.Text.Json
 
 @inherits LayoutComponentBase
 
@@ -23,7 +24,10 @@
         <RadzenPanelMenu>
             @if (authService.IsLoggedIn)
             {
+            @if (authService.IsAdmin)
+            {
                 <RadzenPanelMenuItem Text="Companies" Icon="apartment" Path="companies" />
+            }
             }
             else
             {
@@ -49,17 +53,41 @@
     bool sidebarExpanded = true;
 
 
+    // protected override async Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     if (firstRender)
+    //     {
+    //         var result = await localStorage.GetAsync<string>("auth_token");
+    //         authService.SetLoggedIn(result.Success && !string.IsNullOrEmpty(result.Value));
+    //         authService.OnChange += async () => await InvokeAsync(StateHasChanged);
+    //     }
+
+
+    // }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            var result = await localStorage.GetAsync<string>("auth_token");
-            authService.SetLoggedIn(result.Success && !string.IsNullOrEmpty(result.Value));
+            var result = await localStorage.GetAsync<string>("auth_user");
+            if (result.Success && !string.IsNullOrEmpty(result.Value))
+            {
+                var userData = JsonSerializer.Deserialize<LoginDto>(result.Value, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+
+                authService.SetLoggedIn(true, userData);
+            }
+            else
+            {
+                authService.SetLoggedIn(false);
+            }
+
             authService.OnChange += async () => await InvokeAsync(StateHasChanged);
         }
-
-
     }
+
 
     public void Dispose()
     {
