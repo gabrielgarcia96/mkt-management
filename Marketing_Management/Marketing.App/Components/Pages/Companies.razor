@@ -1,7 +1,36 @@
-﻿@page "/companies"
+﻿@using Microsoft.AspNetCore.Authorization
+@using Marketing.App.Security
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
+@page "/companies"
+
+
+@inject ProtectedLocalStorage localStorage
+@inject NavigationManager Navigation
 
 <h3>Companies</h3>
 
 @code {
 
+    private bool checkedAuth = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var result = await localStorage.GetAsync<string>("auth_token");
+            var token = result.Success ? result.Value : null;
+
+            if (string.IsNullOrEmpty(token))
+            {
+                Navigation.NavigateTo("/");
+            }
+            else
+            {
+                checkedAuth = true;
+                StateHasChanged(); // Atualiza o componente depois de pegar o token
+            }
+        }
+    }
+   
 }

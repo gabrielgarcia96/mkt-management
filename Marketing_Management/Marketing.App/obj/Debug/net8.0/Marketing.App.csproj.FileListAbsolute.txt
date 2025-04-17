@@ -153,3 +153,11 @@ C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Market
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Marketing.App.pdb
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Marketing.App.genruntimeconfig.cache
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\ref\Marketing.App.dll
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

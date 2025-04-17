@@ -6,8 +6,12 @@ using Marketing.Application.Services;
 using Marketing.Infrastructure;
 using Marketing.Infrastructure.Interfaces;
 using Marketing.Infrastructure.Repository;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Radzen;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +19,46 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+// JWT Settings
+var jwtKey = builder.Configuration["Jwt:Key"];
+var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
+
+    // IMPORTANTE: habilita leitura do token via Cookie
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var token = context.Request.Cookies["auth_token"];
+            if (!string.IsNullOrEmpty(token))
+            {
+                context.Token = token;
+            }
+            return Task.CompletedTask;
+        }
+    };
+});
+
 builder.Services.AddAuthorizationCore();
+
+// config http
+builder.Services.AddHttpContextAccessor();
 
 // Config Radzen 
 builder.Services.AddRadzenComponents();
@@ -30,6 +73,8 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
+// AuthService
+builder.Services.AddSingleton<AuthService>();
 
 //Config Database
 builder.Services.AddSingleton<ConfigurationMongoDb>(provider =>
@@ -41,12 +86,9 @@ builder.Services.AddSingleton<ConfigurationMongoDb>(provider =>
 });
 
 // Important line, for authentication don't remove
-builder.Services.AddScoped<AuthenticationStateProvider>(provider =>
-    provider.GetRequiredService<CustomAuthProvider>());
-builder.Services.AddScoped<CustomAuthProvider>();
-
-// LocalStorage
-builder.Services.AddBlazoredLocalStorage();
+//builder.Services.AddScoped<AuthenticationStateProvider>(provider =>
+//    provider.GetRequiredService<CustomAuthProvider>());
+//builder.Services.AddScoped<CustomAuthProvider>();
 
 var app = builder.Build();
 
@@ -62,7 +104,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-//app.UseAuthentication();
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseAntiforgery();
 

@@ -3,13 +3,16 @@
 @using Marketing.App.Security
 @using Marketing.Application.Interfaces
 @using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 
 
 @inject IAccountService AccountService
-
-@inject CustomAuthProvider CustomAuth
+@inject ProtectedLocalStorage localStorage
 @inject NavigationManager Navigation
 @inject Radzen.NotificationService NotificationService
+@inject IConfiguration Configuration
+@inject IHttpContextAccessor HttpContextAccessor
+@inject AuthService authService
 
 
 <RadzenRow Gap="0" class="rz-my-12 rz-mx-auto rz-border-radius-6 rz-shadow-10" Style="width: 100%; max-width: 800px; overflow: hidden;">
@@ -46,7 +49,7 @@
 				</div>
 
 				<div style="margin-top: 30px">
-					<RadzenButton Text="Login" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" />
+					<RadzenButton Text="Login" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" />
 				</div>
 			</EditForm>
 			<div class="rz-p-12 rz-text-align-center">
@@ -80,9 +83,14 @@
 
 			if (user != null)
 			{
+				// Gera o token
+				var token = JwtHelper.GenerateToken(user.Username, user.Roles.ToString(), Configuration);
 
-				await CustomAuth.MarkUserAsAuthenticated(user.Username, user.Roles);
+				// Salva o token no storage local protegido
+				await localStorage.SetAsync("auth_token", token);
+				authService.SetLoggedIn(true);
 
+				// Navega para a próxima página
 				Navigation.NavigateTo("/companies");
 			}
 		}
@@ -91,6 +99,8 @@
 			ErroMessage = "Username or password invalid!";
 		}
 	}
+
+
 
 
 	public void NavigatePage()

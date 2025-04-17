@@ -1,6 +1,11 @@
-﻿﻿﻿﻿@using Microsoft.AspNetCore.Components.Authorization
+﻿@using Marketing.App.Security
+﻿﻿﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 
 @inherits LayoutComponentBase
+
+@inject AuthService authService
+@inject ProtectedLocalStorage localStorage
 
 <RadzenComponents @rendermode="InteractiveServer" />
 
@@ -16,14 +21,14 @@
             <RadzenButton Icon="west" Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary" Click="@(() => sidebarExpanded = false)" />
         </RadzenStack>
         <RadzenPanelMenu>
-            <AuthorizeView>
-                <NotAuthorized>
-                    <RadzenPanelMenuItem Text="Login" Icon="login" Path="/" />
-                </NotAuthorized>
-                <Authorized>
-                    <RadzenPanelMenuItem Text="Companies" Icon="apartment" Path="companies" />
-                </Authorized>
-            </AuthorizeView>
+            @if (authService.IsLoggedIn)
+            {
+                <RadzenPanelMenuItem Text="Companies" Icon="apartment" Path="companies" />
+            }
+            else
+            {
+                <RadzenPanelMenuItem Text="Login" Icon="login" Path="/" />
+            }
         </RadzenPanelMenu>
         <div class="rz-p-4">
             Sidebar
@@ -41,5 +46,23 @@
 </RadzenLayout>
 
 @code {
-    bool sidebarExpanded = false;
+    bool sidebarExpanded = true;
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var result = await localStorage.GetAsync<string>("auth_token");
+            authService.SetLoggedIn(result.Success && !string.IsNullOrEmpty(result.Value));
+            authService.OnChange += async () => await InvokeAsync(StateHasChanged);
+        }
+
+
+    }
+
+    public void Dispose()
+    {
+        authService.OnChange -= StateHasChanged;
+    }
 }
