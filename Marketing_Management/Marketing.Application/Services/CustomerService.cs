@@ -42,11 +42,6 @@ public class CustomerService : ICustomerService
         customer.ContractStartDate = customer.ContractStartDate.ToUniversalTime();
         customer.ContractEndDate = customer.ContractEndDate.ToUniversalTime();
 
-        if (customer.ContractEndDate < DateTime.UtcNow)
-        {
-            customer.Status = false;
-        }
-
 
         var newCustomer = new Customer
         {

@@ -26,7 +26,13 @@ public class AccountService : IAccountService
 
     public async Task RegisterAsync(RegisterDto registerDto)
     {
+
         var existUser = await _accountRepository.GetUserAsync(registerDto.Username);
+
+        if (registerDto.Password != registerDto.ConfirmPassword)
+        {
+            throw new ArgumentException("Passwords do not match.");
+        }
 
         if (existUser != null)
         {

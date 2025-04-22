@@ -22,7 +22,7 @@
             <RadzenText TextStyle="TextStyle.H5" TagName="TagName.H2" class="rz-mb-6">
                 Register
             </RadzenText>
-            <EditForm Model="registerDto" FormName="RegisterForm" OnSubmit="HandleRegister">
+            <EditForm Model="registerDto" FormName="RegisterForm" OnValidSubmit="HandleRegister">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 

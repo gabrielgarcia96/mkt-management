@@ -14,9 +14,9 @@ public class JwtHelper
 
         var claims = new[]
         {
-        new Claim(ClaimTypes.Name, username),
-        new Claim(ClaimTypes.Role, role)
-    };
+            new Claim(ClaimTypes.Name, username),
+            new Claim(ClaimTypes.Role, role)
+        };
 
         var token = new JwtSecurityToken(
             issuer: configuration["Jwt:Issuer"],

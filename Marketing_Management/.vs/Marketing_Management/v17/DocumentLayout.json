@@ -1,14 +1,22 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\",
+  "WorkspaceRootPath": "C:\\Github\\mkt-management\\Marketing_Management\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C5C89A1A-3F51-44C2-91E2-8314F64C1DAD}|Marketing.Infrastructure\\Marketing.Infrastructure.csproj|c:\\users\\gabriel.garcia\\source\\github\\mkt-management\\marketing_management\\marketing.infrastructure\\repository\\customerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C5C89A1A-3F51-44C2-91E2-8314F64C1DAD}|Marketing.Infrastructure\\Marketing.Infrastructure.csproj|solutionrelative:marketing.infrastructure\\repository\\customerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|c:\\github\\mkt-management\\marketing_management\\marketing.app\\components\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|solutionrelative:marketing.app\\components\\pages\\register.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|c:\\users\\gabriel.garcia\\source\\github\\mkt-management\\marketing_management\\marketing.app\\components\\pages\\companies.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|solutionrelative:marketing.app\\components\\pages\\companies.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|c:\\github\\mkt-management\\marketing_management\\marketing.app\\security\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|solutionrelative:marketing.app\\security\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|c:\\github\\mkt-management\\marketing_management\\marketing.app\\security\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CC03C879-0141-4D8C-BC63-EF677D1651D2}|Marketing.App\\Marketing.App.csproj|solutionrelative:marketing.app\\security\\jwthelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25B12B2D-EA1D-43F1-84F3-80C8BEFB180A}|Marketing.Application\\Marketing.Application.csproj|c:\\github\\mkt-management\\marketing_management\\marketing.application\\services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25B12B2D-EA1D-43F1-84F3-80C8BEFB180A}|Marketing.Application\\Marketing.Application.csproj|solutionrelative:marketing.application\\services\\accountservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,28 +34,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CustomerRepository.cs",
-              "DocumentMoniker": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Repository\\CustomerRepository.cs",
-              "RelativeDocumentMoniker": "Marketing.Infrastructure\\Repository\\CustomerRepository.cs",
-              "ToolTip": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Repository\\CustomerRepository.cs",
-              "RelativeToolTip": "Marketing.Infrastructure\\Repository\\CustomerRepository.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAADwv0YAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "AccountService.cs",
+              "DocumentMoniker": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\Services\\AccountService.cs",
+              "RelativeDocumentMoniker": "Marketing.Application\\Services\\AccountService.cs",
+              "ToolTip": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\Services\\AccountService.cs",
+              "RelativeToolTip": "Marketing.Application\\Services\\AccountService.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAA6wCIAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-22T20:46:51.933Z",
+              "WhenOpened": "2025-04-22T23:47:07.033Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "JwtHelper.cs",
+              "DocumentMoniker": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Security\\JwtHelper.cs",
+              "RelativeDocumentMoniker": "Marketing.App\\Security\\JwtHelper.cs",
+              "ToolTip": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Security\\JwtHelper.cs",
+              "RelativeToolTip": "Marketing.App\\Security\\JwtHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T23:44:02.967Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Companies.razor",
-              "DocumentMoniker": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Components\\Pages\\Companies.razor",
-              "RelativeDocumentMoniker": "Marketing.App\\Components\\Pages\\Companies.razor",
-              "ToolTip": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Components\\Pages\\Companies.razor",
-              "RelativeToolTip": "Marketing.App\\Components\\Pages\\Companies.razor",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAywAsAAAAoAAAAAAAAAA==",
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Security\\AuthService.cs",
+              "RelativeDocumentMoniker": "Marketing.App\\Security\\AuthService.cs",
+              "ToolTip": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Security\\AuthService.cs",
+              "RelativeToolTip": "Marketing.App\\Security\\AuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T23:43:53.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Register.razor",
+              "DocumentMoniker": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Components\\Pages\\Register.razor",
+              "RelativeDocumentMoniker": "Marketing.App\\Components\\Pages\\Register.razor",
+              "ToolTip": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\Components\\Pages\\Register.razor",
+              "RelativeToolTip": "Marketing.App\\Components\\Pages\\Register.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-22T17:21:34.38Z",
+              "WhenOpened": "2025-04-22T23:40:55.323Z",
               "EditorCaption": ""
             }
           ]

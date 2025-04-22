@@ -23,3 +23,16 @@ C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Market
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\refint\Marketing.Domain.dll
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\Marketing.Domain.pdb
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\ref\Marketing.Domain.dll
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\bin\Debug\net8.0\Marketing.Domain.deps.json
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\bin\Debug\net8.0\Marketing.Domain.dll
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\bin\Debug\net8.0\Marketing.Domain.pdb
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\Marketing.Domain.csproj.AssemblyReference.cache
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\Marketing.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\Marketing.Domain.AssemblyInfoInputs.cache
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\Marketing.Domain.AssemblyInfo.cs
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\Marketing.Domain.csproj.CoreCompileInputs.cache
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\Marketing.Domain.sourcelink.json
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\Marketing.Domain.dll
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\refint\Marketing.Domain.dll
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\Marketing.Domain.pdb
+C:\Github\mkt-management\Marketing_Management\Marketing.Domain\obj\Debug\net8.0\ref\Marketing.Domain.dll
