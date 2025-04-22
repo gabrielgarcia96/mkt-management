@@ -84,14 +84,12 @@
 
 			if (user != null)
 			{
-				// Gera o token
 				var token = JwtHelper.GenerateToken(user.Username, user.Roles.ToString(), Configuration);
 
-				// Salva o token no storage local protegido
+				
 				await localStorage.SetAsync("auth_token", token);
 				authService.SetLoggedIn(true, user);
 				await localStorage.SetAsync("auth_user", JsonSerializer.Serialize(user));
-				// Navega para a próxima página
 				await Task.Delay(100);
 				Navigation.NavigateTo("/companies");
 			}

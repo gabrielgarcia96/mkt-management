@@ -8,5 +8,7 @@ public interface ICustomerService
     Task<Customer> GetCustomerNameAsync(string customerName);
     Task<List<Customer>> GetAllCustomersAsync();
     Task UpdateCustomerAsync(string customerName, Customer customer);
+    Task<Customer> GetCustomerCnpjAsync(string customerCnpj);
+    Task DeleteCustomerAsync(string customerCnpj);
 
 }

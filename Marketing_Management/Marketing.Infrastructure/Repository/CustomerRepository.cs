@@ -21,11 +21,6 @@ public class CustomerRepository : ICustomerRepository
         return _configmongoDb.CustomerCollection.InsertOneAsync(customer);
     }
 
-    public Task DeleteCustomerAsync(string customerName)
-    {
-        return _configmongoDb.CustomerCollection.DeleteOneAsync(customerName);
-    }
-
     public  Task<List<Customer>> GetAllCustomerAsync()
     {
         return _configmongoDb.CustomerCollection.Find(c => true)
@@ -35,7 +30,10 @@ public class CustomerRepository : ICustomerRepository
                 Cnpj = c.Cnpj,
                 City = c.City,
                 Address = c.Address,
+                PostalCode = c.PostalCode,
                 TypeContract = c.TypeContract,
+                ContractStartDate = c.ContractStartDate,
+                ContractEndDate = c.ContractEndDate,
                 Status = c.Status,
 
             }).ToListAsync();
@@ -47,9 +45,15 @@ public class CustomerRepository : ICustomerRepository
             .FirstOrDefaultAsync();
     }
 
-    public async Task UpdateCustomer(string customerName, Customer customer)
+    public Task<Customer> GetCustomerCnpjAsync(string customerCnpj)
     {
-        var filter = Builders<Customer>.Filter.Eq(c => c.Name, customerName);
+        return _configmongoDb.CustomerCollection.Find(c => c.Cnpj == customerCnpj)
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task UpdateCustomer(string customerCnpj, Customer customer)
+    {
+        var filter = Builders<Customer>.Filter.Eq(c => c.Cnpj, customerCnpj);
         var update = Builders<Customer>.Update
              .Set(c => c.Name, customer.Name)
              .Set(c => c.Email, customer.Email)
@@ -58,8 +62,16 @@ public class CustomerRepository : ICustomerRepository
              .Set(c => c.City, customer.City)
              .Set(c => c.Region, customer.Region)
              .Set(c => c.TypeContract, customer.TypeContract)
+             .Set(c => c.ContractStartDate, customer.ContractStartDate)
+             .Set(c  => c.ContractEndDate, customer.ContractEndDate)
              .Set(c => c.Status, customer.Status);
 
         await _configmongoDb.CustomerCollection.UpdateOneAsync(filter, update);
+    }
+
+    public async Task DeleteCustomerAsync(string customerCnpj)
+    {
+        var filter = Builders<Customer>.Filter.Eq(c => c.Cnpj, customerCnpj);
+        await _configmongoDb.CustomerCollection.DeleteOneAsync(filter);
     }
 }

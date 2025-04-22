@@ -1,36 +1,271 @@
-﻿@using Microsoft.AspNetCore.Authorization
+﻿@using Marketing.Application.Interfaces
+@using Marketing.Application.Services
+@using Microsoft.AspNetCore.Authorization
 @using Marketing.App.Security
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 
 @page "/companies"
 
-
+@using Marketing.Domain.Models
 @inject ProtectedLocalStorage localStorage
 @inject NavigationManager Navigation
+@inject ICustomerService CustomerService
+@inject NotificationService notification
 
-<h3>Companies</h3>
+<style>
+	.matrix-modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.8);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+	}
+
+	.matrix-modal {
+	background-color: black;
+	border: 2px solid #00FF00;
+	padding: 20px;
+	width: 400px;
+	color: #00FF00;
+	border-radius: 8px;
+	}
+	.form-grid
+	{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 16px;
+	}
+
+	.form-grid-item {
+	display: flex;
+	flex-direction: column;
+	}
+
+</style>
+
+
+<h2>Companies</h2>
+
+<RadzenButton Text="Register Companie" ButtonStyle="ButtonStyle.Success" Click="@ShowModal" />
+
+
+@if (showModal)
+{
+	<div class="matrix-modal-overlay">
+		<div class="matrix-modal">
+			<h3 style="color: #00FF00;">Register New Customer</h3>
+			<EditForm Model="@newCustomer" OnSubmit="@(isEditing ? UpdateCustomer : RegisterCustomer)"> @* OnValidSubmit="@RegisterCustomer"> *@
+				<div class="form-grid">
+					<div class="form-grid-item">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Trade name (DBA):</RadzenText>
+						<RadzenTextBox @bind-Value="newCustomer.Name" style="width: 100%;" />
+					</div>
+
+					<div class="form-grid-item">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">E-mail:</RadzenText>
+						<RadzenTextBox @bind-Value="newCustomer.Email" style="width: 100%;" />
+					</div>
+
+					<div class="form-grid-item">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Cnpj:</RadzenText>
+						<RadzenTextBox @bind-Value="newCustomer.Cnpj" style="width: 100%;" />
+					</div>
+
+					<div class="form-grid-item">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Postal Code:</RadzenText>
+						<RadzenTextBox @bind-Value="newCustomer.PostalCode" style="width: 100%;" />
+					</div>
+
+					<div class="form-grid-item">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Address:</RadzenText>
+						<RadzenTextBox @bind-Value="newCustomer.Address" style="width: 100%;" />
+					</div>
+
+					<div class="form-grid-item">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">City:</RadzenText>
+						<RadzenTextBox @bind-Value="newCustomer.City" style="width: 100%;" />
+					</div>
+
+					<div class="form-grid-item">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Region:</RadzenText>
+						<RadzenTextBox @bind-Value="newCustomer.Region" style="width: 100%;" />
+					</div>
+
+					<div class="form-grid-item">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Type Contract:</RadzenText>
+						<RadzenTextBox @bind-Value="newCustomer.TypeContract" style="width: 100%;" />
+					</div>
+
+					<div class="form-grid-item">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Contract Start Date:</RadzenText>
+						<RadzenDatePicker @bind-Value="newCustomer.ContractStartDate" style="width: 100%;" />
+					</div>
+
+					<div class="form-grid-item">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Contract End Date:</RadzenText>
+						<RadzenDatePicker @bind-Value="newCustomer.ContractEndDate" style="width: 100%;" />
+					</div>
+
+
+					<div class="form-grid-item" style="grid-column: span 2;">
+						<RadzenCheckBox @bind-Value="newCustomer.Status" /> Active
+					</div>
+				</div>
+
+
+				<RadzenButton Text="Save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Style="margin-top: 10px;" />
+				<RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Light" Click="@(() => showModal = false)" Style="margin-top: 10px; margin-left: 10px;" />
+			</EditForm>
+
+		</div>
+	</div>
+}
+
+<RadzenDataGrid TItem="Customer" Style="margin-top: 20px;" PageSize="10" AllowPaging="true" AllowSorting="true" Data="@ListCustomer" ColumnWidth="400px">
+	<Columns>
+		<RadzenDataGridColumn Property="Name" Title="Trade Name" Width="50px" />
+		<RadzenDataGridColumn Property="Cnpj" Title="Cnpj" Width="100px" />
+		<RadzenDataGridColumn Property="TypeContract" Title="Type Contract" Width="100px" />
+		<RadzenDataGridColumn Property="ContractStartDate" Title="Start Date" Width="100px">
+			<Template Context="customer">
+				@customer.ContractStartDate.ToLocalTime().ToString("yyyy-MM-dd")
+			</Template>
+		</RadzenDataGridColumn>
+		<RadzenDataGridColumn Property="ContractEndDate" Title="End Date" Width="100px">
+			<Template Context="customer">
+				@customer.ContractEndDate.ToLocalTime().ToString("yyyy-MM-dd")
+			</Template>
+		</RadzenDataGridColumn>
+		<RadzenDataGridColumn Property="Status" Title="Status" Width="100px" />
+
+		<RadzenDataGridColumn Title="Actions" Width="200px">
+			<Template Context="customer">
+				<RadzenButton Icon="edit" Text="Edit" Click="@(args => EditCustomer(customer))" Style="margin-right: 10px;" />
+				<RadzenButton Icon="delete" Text="Delete" Click="@(args => DeleteCustomer(customer.Cnpj))" ButtonStyle="ButtonStyle.Danger" />
+			</Template>
+		</RadzenDataGridColumn>
+	</Columns>
+</RadzenDataGrid>
+
+
+
 
 @code {
+	private bool showModal = false;
+	private bool isEditing = false;
+	private string submitButtonText = "Register";
+	private Customer newCustomer = new();
+	private List<Customer> ListCustomer = new();
 
-    private bool checkedAuth = false;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            var result = await localStorage.GetAsync<string>("auth_token");
-            var token = result.Success ? result.Value : null;
+	protected override async Task OnInitializedAsync()
+	{
 
-            if (string.IsNullOrEmpty(token))
-            {
-                Navigation.NavigateTo("/");
-            }
-            else
-            {
-                checkedAuth = true;
-                StateHasChanged(); // Atualiza o componente depois de pegar o token
-            }
-        }
-    }
-   
+		var allCustomer = await CustomerService.GetAllCustomersAsync();
+		ListCustomer = allCustomer.Where(c => c.Status == true).ToList();
+
+	}
+
+	private async Task RegisterCustomer()
+	{
+		var existeCnpj = await CustomerService.GetCustomerCnpjAsync(newCustomer.Cnpj);
+
+
+		if(existeCnpj != null)
+		{
+			notification.Notify(Radzen.NotificationSeverity.Error, "Erro", "Cnpj already exists!");
+			return;
+		}
+
+		await CustomerService.RegisterCustomerAsync(newCustomer);
+
+		newCustomer = new();
+		notification.Notify(Radzen.NotificationSeverity.Success, "Customer Created Success!");
+
+		Console.WriteLine($"Customer: {newCustomer.Name}, {newCustomer.Email}");
+
+		showModal = false; // Fecha o modal após salvar
+		newCustomer = new(); // Limpa o formulário
+		ListCustomer = (await CustomerService.GetAllCustomersAsync()).Where(c => c.Status == true).ToList();
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			var result = await localStorage.GetAsync<string>("auth_token");
+			var token = result.Success ? result.Value : null;
+
+			if (string.IsNullOrEmpty(token))
+			{
+				Navigation.NavigateTo("/");
+			}
+			else
+			{
+				StateHasChanged();
+			}
+		}
+	}
+
+	private void ShowModal()
+	{
+		showModal = true;
+	}
+
+	private void EditCustomer(Customer customer)
+	{
+		newCustomer = new Customer
+			{
+				Name = customer.Name,
+				Email = customer.Email,
+				Cnpj = customer.Cnpj,
+				PostalCode = customer.PostalCode,
+				Address = customer.Address,
+				City = customer.City,
+				Region = customer.Region,
+				TypeContract = customer.TypeContract,
+				ContractStartDate = customer.ContractStartDate,
+				ContractEndDate = customer.ContractEndDate,
+				Status = customer.Status
+			};
+
+		showModal = true;
+		isEditing = true;
+		submitButtonText = "Update";
+	}
+
+	private async Task UpdateCustomer()
+	{
+		try
+		{
+			await CustomerService.UpdateCustomerAsync(newCustomer.Cnpj, newCustomer);
+			ListCustomer = await CustomerService.GetAllCustomersAsync();
+
+			newCustomer = new();
+			showModal = false;
+			isEditing = false;
+
+			ListCustomer = (await CustomerService.GetAllCustomersAsync()).Where(c => c.Status == true).ToList();
+			StateHasChanged();
+			notification.Notify(Radzen.NotificationSeverity.Success, "Product Updated Successfully!");
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine("Error updating Product: " + ex);
+		}
+	}
+
+	private async Task DeleteCustomer(string customerCnpj)
+	{
+		await CustomerService.DeleteCustomerAsync(customerCnpj);
+		ListCustomer = await CustomerService.GetAllCustomersAsync();
+		notification.Notify(Radzen.NotificationSeverity.Success, "Customer Deleted!");
+	}
+
 }
+

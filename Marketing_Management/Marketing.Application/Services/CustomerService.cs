@@ -24,13 +24,56 @@ public class CustomerService : ICustomerService
         return _customerRepository.GetCustomerAsync(customerName);
     }
 
-    public Task RegisterCustomerAsync(Customer customer)
+    public Task<Customer> GetCustomerCnpjAsync(string customerCnpj)
     {
-        return _customerRepository.CreateCustomerAsync(customer);
+        return _customerRepository.GetCustomerCnpjAsync(customerCnpj);
     }
 
-    public Task UpdateCustomerAsync(string customerName, Customer customer)
+    public async Task RegisterCustomerAsync(Customer customer)
     {
-        return _customerRepository.UpdateCustomer(customerName, customer);
+        var existCustomer = await _customerRepository.GetCustomerCnpjAsync(customer.Cnpj);
+
+        if (existCustomer != null)
+        {
+            Console.WriteLine("Username already exists!");
+            return;
+        }
+
+        customer.ContractStartDate = customer.ContractStartDate.ToUniversalTime();
+        customer.ContractEndDate = customer.ContractEndDate.ToUniversalTime();
+
+        if (customer.ContractEndDate < DateTime.UtcNow)
+        {
+            customer.Status = false;
+        }
+
+
+        var newCustomer = new Customer
+        {
+            Name = customer.Name,
+            Email = customer.Email,
+            Cnpj = customer.Cnpj,
+            PostalCode = customer.PostalCode,
+            Address = customer.Address,
+            City = customer.City,
+            Region = customer.Region,
+            TypeContract = customer.TypeContract,
+            ContractStartDate = customer.ContractStartDate,
+            ContractEndDate = customer.ContractEndDate,
+            Status = customer.Status
+        };
+
+        await _customerRepository.CreateCustomerAsync(newCustomer);
+    }
+
+    public Task UpdateCustomerAsync(string customerCnpj, Customer customer)
+    {
+        return _customerRepository.UpdateCustomer(customerCnpj, customer);
+    }
+
+
+    public Task DeleteCustomerAsync(string customerCnpj)
+    {
+        return _customerRepository.DeleteCustomerAsync(customerCnpj);
     }
 }

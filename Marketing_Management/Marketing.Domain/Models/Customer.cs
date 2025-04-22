@@ -4,7 +4,7 @@ namespace Marketing.Domain.Models
 {
     public class Customer
     {
-        public string Id = Guid.NewGuid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
 
         [BsonElement("customer_name")]
         public string Name { get; set; } = string.Empty;
@@ -22,6 +22,11 @@ namespace Marketing.Domain.Models
         public string Region { get; set; } = string.Empty ;
         [BsonElement("type_contract")]
         public string TypeContract {  get; set; } = string.Empty;
+        [BsonElement("contract_start_date")]
+        public DateTime ContractStartDate { get; set; } = DateTime.UtcNow.AddHours(-3);
+
+        [BsonElement("contract_end_date")]
+        public DateTime ContractEndDate { get; set; } = DateTime.UtcNow.AddHours(-3);
         [BsonElement("status")]
         public bool Status { get; set; }
     }
