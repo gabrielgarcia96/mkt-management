@@ -91,7 +91,7 @@
 				authService.SetLoggedIn(true, user);
 				await localStorage.SetAsync("auth_user", JsonSerializer.Serialize(user));
 				await Task.Delay(100);
-				Navigation.NavigateTo("/companies");
+				Navigation.NavigateTo("/dashboard");
 			}
 		}
 		catch (UnauthorizedAccessException)

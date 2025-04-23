@@ -1,0 +1,116 @@
+﻿@page "/leads"
+@using Marketing.Application.Interfaces
+@using Marketing.Domain.Models
+@inject ILeadService LeadService
+@inject NotificationService notification
+
+<style>
+    .matrix-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .matrix-modal {
+        background-color: black;
+        border: 2px solid #00FF00;
+        padding: 20px;
+        width: 500px;
+        color: #00FF00;
+        border-radius: 8px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .form-grid-item {
+        display: flex;
+        flex-direction: column;
+    }
+</style>
+
+<h2 style="color:#00FF00;">Lead List</h2>
+
+<RadzenButton Text="New Lead" Click="ShowModal" ButtonStyle="ButtonStyle.Success" />
+
+@if (showModal)
+{
+    <div class="matrix-modal-overlay">
+        <div class="matrix-modal">
+            <h3 style="color:#00FF00;">Registrar Novo Lead</h3>
+            <EditForm Model="@newLead" OnValidSubmit="@RegisterLead">
+                <div class="form-grid">
+                    <div class="form-grid-item">
+                        <RadzenText style="color:white; font-weight:bold;">Full Name</RadzenText>
+                        <RadzenTextBox @bind-Value="newLead.FullName" Style="width:100%" />
+                    </div>
+                    <div class="form-grid-item">
+                        <RadzenText style="color:white; font-weight:bold;">E-mail</RadzenText>
+                        <RadzenTextBox @bind-Value="newLead.Email" Style="width:100%" />
+                    </div>
+                    <div class="form-grid-item">
+                        <RadzenText style="color:white; font-weight:bold;">Phone Number</RadzenText>
+                        <RadzenTextBox @bind-Value="newLead.Phone" Style="width:100%" />
+                    </div>
+                </div>
+                <RadzenButton Text="Save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Style="margin-top:10px;" />
+                <RadzenButton Text="Cancel" Click="@(() => showModal = false)" ButtonStyle="ButtonStyle.Light" Style="margin-top:10px; margin-left:10px;" />
+            </EditForm>
+        </div>
+    </div>
+}
+
+<RadzenDataGrid Style="margin-top: 20px;" TItem="Lead" Data="@leads" AllowPaging="true" AllowSorting="true" PageSize="10">
+    <Columns>
+        <RadzenDataGridColumn Property="FullName" Title="Full Name" />
+        <RadzenDataGridColumn Property="Email" Title="Email" />
+        <RadzenDataGridColumn Property="Phone" Title="Phone Number" />
+        <RadzenDataGridColumn Property="CreatedAt" Title="Date Register">
+            <Template Context="lead">@lead.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</Template>
+        </RadzenDataGridColumn>
+        <RadzenDataGridColumn Title="Ações">
+            <Template Context="lead">
+                <RadzenButton Text="Delete" ButtonStyle="ButtonStyle.Danger" Click="@(args => DeleteLead(lead.Id))" />
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+@code {
+    private List<Lead> leads = new();
+    private Lead newLead = new();
+    private bool showModal = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        leads = await LeadService.GetAllAsync();
+    }
+
+    private async Task RegisterLead()
+    {
+        await LeadService.CreateAsync(newLead);
+        notification.Notify(Radzen.NotificationSeverity.Success, "Sucesso", "Lead registrado com sucesso!");
+        showModal = false;
+        newLead = new();
+        leads = await LeadService.GetAllAsync();
+    }
+
+    private async Task DeleteLead(string id)
+    {
+        await LeadService.DeleteAsync(id);
+        notification.Notify(Radzen.NotificationSeverity.Success, "Removido", "Lead excluído.");
+        leads = await LeadService.GetAllAsync();
+    }
+
+    private void ShowModal() => showModal = true;
+}

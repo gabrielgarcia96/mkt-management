@@ -69,11 +69,13 @@ builder.Services.AddRadzenComponents();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ICampaignService, CampaignService>();
+builder.Services.AddScoped<ILeadService, LeadService>();
 
 // Builder Repositorys
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
+builder.Services.AddScoped<ILeadRepository, LeadRepository>();
 
 // AuthService
 builder.Services.AddSingleton<AuthService>();
