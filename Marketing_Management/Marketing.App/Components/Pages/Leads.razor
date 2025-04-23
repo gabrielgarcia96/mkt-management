@@ -78,7 +78,7 @@
         <RadzenDataGridColumn Property="CreatedAt" Title="Date Register">
             <Template Context="lead">@lead.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</Template>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn Title="Ações">
+        <RadzenDataGridColumn Title="Actions">
             <Template Context="lead">
                 <RadzenButton Text="Delete" ButtonStyle="ButtonStyle.Danger" Click="@(args => DeleteLead(lead.Id))" />
             </Template>
