@@ -28,8 +28,14 @@
 	<RadzenColumn Size="12" SizeMD="6">
 
 		<RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-p-12">
+			<div class="rz-text-align-right rz-mb-2">
+				<RadzenButton Text="Português" Click="@(() => ChangeLanguage("pt"))"
+							  ButtonStyle="ButtonStyle.Light"
+							  Style="margin-bottom: 10px;" />
+			</div>
+
 			<RadzenText TextStyle="TextStyle.H5" TagName="TagName.H2" class="rz-mb-6">
-				Login
+				@(currentLanguage == "pt" ? "Entrar" : "Login")
 			</RadzenText>
 			@if (!string.IsNullOrEmpty(ErroMessage))
 			{
@@ -39,22 +45,29 @@
 				<DataAnnotationsValidator />
 				<ValidationSummary />
 				<div>
-					<RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Username</RadzenText>
+					<RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">
+						@(currentLanguage == "pt" ? "Usuário" : "Username")
+					</RadzenText>
 					<RadzenTextBox @bind-Value="Logindto.Username" Style="width: 100%" aria-label="Default TextBox" />
 
 				</div>
 
 				<div>
-					<RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Password</RadzenText>
+					<RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">
+						@(currentLanguage == "pt" ? "Senha" : "Password")
+					</RadzenText>
 					<RadzenPassword @bind-Value="Logindto.Password" Style="width: 100%" AutoComplete="false" aria-label="enter password" />
 				</div>
 
 				<div style="margin-top: 30px">
-					<RadzenButton Text="Login" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" />
+
+					<RadzenButton Text="@(currentLanguage == "pt" ? "Entrar" : "Login")"
+								  ButtonType="ButtonType.Submit"
+								  ButtonStyle="ButtonStyle.Success" />
 				</div>
 			</EditForm>
 			<div class="rz-p-12 rz-text-align-center">
-				<RadzenLink @onclick="NavigatePage" Text="Go to register" />
+				<RadzenLink @onclick="NavigatePage" Text="@(currentLanguage == "pt" ? "Registrar" : "Go to register")" />
 			</div>
 
 		</RadzenCard>
@@ -65,8 +78,9 @@
 @code {
 	[SupplyParameterFromForm]
 	private LoginDto Logindto { get; set; } = new();
-
 	private string? ErroMessage { get; set; }
+	private string currentLanguage = "en";
+
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -108,5 +122,9 @@
 		Navigation.NavigateTo("/register");
 	}
 
+	private void ChangeLanguage(string lang)
+	{
+		currentLanguage = lang;
+	}
 
 }
