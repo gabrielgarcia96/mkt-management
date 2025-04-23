@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\Marketing.Application.csproj": {}
+    "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\Marketing.Application.csproj": {}
   },
   "projects": {
-    "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\Marketing.Application.csproj": {
+    "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\Marketing.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\Marketing.Application.csproj",
+        "projectUniqueName": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\Marketing.Application.csproj",
         "projectName": "Marketing.Application",
-        "projectPath": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\Marketing.Application.csproj",
-        "packagesPath": "C:\\Users\\bielg\\.nuget\\packages\\",
-        "outputPath": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\obj\\",
+        "projectPath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\Marketing.Application.csproj",
+        "packagesPath": "C:\\Users\\gabriel.garcia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\bielg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gabriel.garcia\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,8 +32,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Marketing.Infrastructure.csproj": {
-                "projectPath": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Marketing.Infrastructure.csproj"
+              "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Marketing.Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Marketing.Infrastructure.csproj"
               }
             }
           }
@@ -46,9 +46,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -75,24 +75,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj": {
+    "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj",
         "projectName": "Marketing.Domain",
-        "projectPath": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj",
-        "packagesPath": "C:\\Users\\bielg\\.nuget\\packages\\",
-        "outputPath": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\obj\\",
+        "projectPath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj",
+        "packagesPath": "C:\\Users\\gabriel.garcia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\bielg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gabriel.garcia\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -117,9 +117,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -146,24 +146,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Marketing.Infrastructure.csproj": {
+    "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Marketing.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Marketing.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Marketing.Infrastructure.csproj",
         "projectName": "Marketing.Infrastructure",
-        "projectPath": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Marketing.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\bielg\\.nuget\\packages\\",
-        "outputPath": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\Marketing.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\gabriel.garcia\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\bielg\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gabriel.garcia\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -178,8 +178,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj": {
-                "projectPath": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj"
+              "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj": {
+                "projectPath": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.Domain\\Marketing.Domain.csproj"
               }
             }
           }
@@ -192,9 +192,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -225,7 +225,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,0 +1,85 @@
+﻿@page "/dashboard"
+@using Marketing.Application.Interfaces
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ICustomerService CustomerService
+@inject ICampaignService CampaignService
+@* @inject ILeadService LeadService *@
+@inject ProtectedLocalStorage localStorage
+@inject NavigationManager Navigation
+
+<h2>Dashboard Indices</h2>
+
+<div class="dashboard-cards">
+	<div class="card">
+		<h3>Empresas Registradas</h3>
+		<p>@totalCompanies</p>
+	</div>
+
+	<div class="card">
+		<h3>Campanhas em Andamento</h3>
+		<p>@activeCampaigns</p>
+	</div>
+
+	<div class="card">
+		<h3>Leads no Mês</h3>
+		<p>@monthlyLeads</p>
+	</div>
+</div>
+<style>
+	.dashboard-cards {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px;
+		margin-top: 30px;
+	}
+
+	.card {
+		flex: 1 1 300px;
+		padding: 20px;
+		border-radius: 10px;
+		background-color: #0a0a0a;
+		border: 2px solid #00FF00;
+		color: #00FF00;
+		text-align: center;
+		box-shadow: 0 0 15px #00FF00;
+	}
+
+		.card h3 {
+			margin-bottom: 10px;
+			font-size: 20px;
+		}
+
+		.card p {
+			font-size: 28px;
+			font-weight: bold;
+		}
+	h2{
+		justify-content: center;
+		display: flex;
+	}
+</style>
+
+@code {
+	private int totalCompanies;
+	private int activeCampaigns;
+	private int monthlyLeads;
+
+	protected override async Task OnInitializedAsync()
+	{
+		var tokenResult = await localStorage.GetAsync<string>("auth_token");
+		if (!tokenResult.Success || string.IsNullOrEmpty(tokenResult.Value))
+		{
+			Navigation.NavigateTo("/");
+			return;
+		}
+
+		var companies = await CustomerService.GetAllCustomersAsync();
+		totalCompanies = companies.Count(c => c.Status == true);
+
+		 var campaigns = await CampaignService.GetAllAsync(); 
+		 activeCampaigns = campaigns.Count(c => c.IsActive);
+
+		 // var leads = await LeadService.GetLeadsThisMonthAsync(); // Supondo que esse método exista
+		 // monthlyLeads = leads.Count();
+	}
+}

@@ -15,4 +15,6 @@ public class ConfigurationMongoDb
 
     public IMongoCollection<User> UserCollection => _database.GetCollection<User>("user");
     public IMongoCollection<Customer> CustomerCollection => _database.GetCollection<Customer>("customer");
+
+    public IMongoCollection<Campaign> CampaignCollection => _database.GetCollection<Campaign>("campaign");
 }
