@@ -1,49 +1,51 @@
 ﻿@page "/campaigns"
 
+@using Marketing.App.Security
 @using Marketing.Application.Interfaces
 @using Marketing.Domain.Models
 @using Radzen
 
 @inject ICampaignService CampaignService
+@inject LanguageService LangService
 
 <style>
     .matrix-modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
     }
 
     .matrix-modal {
-        background-color: black;
-        border: 2px solid #00FF00;
-        padding: 20px;
-        width: 500px;
-        color: #00FF00;
-        border-radius: 8px;
+    background-color: black;
+    border: 2px solid #00FF00;
+    padding: 20px;
+    width: 500px;
+    color: #00FF00;
+    border-radius: 8px;
     }
 
     .form-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
     }
 
     .form-grid-item {
-        display: flex;
-        flex-direction: column;
+    display: flex;
+    flex-direction: column;
     }
 </style>
 
-<h2 style="color:#00FF00;">Campaigns</h2>
+<h2 style="color:#00FF00;">@Loc.Get("CampaignsTitle", currentLeanguage)</h2>
 
-<RadzenButton Text="New Campaign" ButtonStyle="ButtonStyle.Success" Click="@(() => ShowForm(new Campaign()))" Style="margin-bottom: 10px;" />
+<RadzenButton Text="@Loc.Get("NewCampaignButton", currentLeanguage)" ButtonStyle="ButtonStyle.Success" Click="@(() => ShowForm(new Campaign()))" Style="margin-bottom: 10px;" />
 
 @if (showForm)
 {
@@ -54,33 +56,33 @@
             <EditForm Model="@campaign" OnValidSubmit="@Save">
                 <div class="form-grid">
                     <div class="form-grid-item">
-                        <RadzenText Style="color: #fff; font-weight: bold;">Name:</RadzenText>
+                        <RadzenText Style="color: #fff; font-weight: bold;">@Loc.Get("CampaignNameLabel", currentLeanguage)</RadzenText>
                         <RadzenTextBox @bind-Value="campaign.Name" Style="width: 100%;" />
                     </div>
 
                     <div class="form-grid-item">
-                        <RadzenText Style="color: #fff; font-weight: bold;">Description:</RadzenText>
+                        <RadzenText Style="color: #fff; font-weight: bold;">@Loc.Get("DescriptionLabel", currentLeanguage)</RadzenText>
                         <RadzenTextBox @bind-Value="campaign.Description" Style="width: 100%;" />
                     </div>
 
                     <div class="form-grid-item">
-                        <RadzenText Style="color: #fff; font-weight: bold;">Start Date:</RadzenText>
+                        <RadzenText Style="color: #fff; font-weight: bold;">@Loc.Get("StartDateLabel", currentLeanguage)</RadzenText>
                         <RadzenDatePicker @bind-Value="campaign.StartDate" Style="width: 100%;" />
                     </div>
 
                     <div class="form-grid-item">
-                        <RadzenText Style="color: #fff; font-weight: bold;">End Date:</RadzenText>
+                        <RadzenText Style="color: #fff; font-weight: bold;">@Loc.Get("EndDateLabel", currentLeanguage)</RadzenText>
                         <RadzenDatePicker @bind-Value="campaign.EndDate" Style="width: 100%;" />
                     </div>
 
                     <div class="form-grid-item" style="grid-column: span 2;">
                         <RadzenCheckBox @bind-Value="campaign.IsActive" />
-                        <label style="color: #00FF00; margin-left: 10px;">Ativa</label>
+                        <label style="color: #00FF00; margin-left: 10px;">Active</label>
                     </div>
                 </div>
 
-                <RadzenButton Text="Save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Style="margin-top: 10px;" />
-                <RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Light" Click="@(() => showForm = false)" Style="margin-top: 10px; margin-left: 10px;" />
+                <RadzenButton Text="@Loc.Get("SaveButton", currentLeanguage)" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Style="margin-top: 10px;" />
+                <RadzenButton Text="@Loc.Get("CancelButton", currentLeanguage)" ButtonStyle="ButtonStyle.Light" Click="@(() => showForm = false)" Style="margin-top: 10px; margin-left: 10px;" />
             </EditForm>
         </div>
     </div>
@@ -88,19 +90,19 @@
 
 <RadzenDataGrid  Data="@campaigns" TItem="Campaign" AllowPaging="true" PageSize="10" Style="margin-top: 20px;" ColumnWidth="200px">
     <Columns>
-        <RadzenDataGridColumn Property="Name" Title="Name" />
-        <RadzenDataGridColumn Property="Description" Title="Description" />
-        <RadzenDataGridColumn Property="StartDate" Title="Start Date">
+        <RadzenDataGridColumn Property="Name" Title="@Loc.Get("CampaignNameLabel", currentLeanguage)" />
+        <RadzenDataGridColumn Property="Description" Title="@Loc.Get("DescriptionLabel", currentLeanguage)" />
+        <RadzenDataGridColumn Property="StartDate" Title="@Loc.Get("StartDateLabel", currentLeanguage)">
             <Template Context="c">@c.StartDate.ToShortDateString()</Template>
         </RadzenDataGridColumn>
-        <RadzenDataGridColumn Property="EndDate" Title="End Date">
+        <RadzenDataGridColumn Property="EndDate" Title="@Loc.Get("EndDateLabel", currentLeanguage)">
             <Template Context="c">@c.EndDate.ToShortDateString()</Template>
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Property="IsActive" Title="Active" />
         <RadzenDataGridColumn Title="Actions">
             <Template Context="c">
-                <RadzenButton Icon="edit" Text="Editar" Click="@(() => ShowForm(c))" Style="margin-right: 5px;" />
-                <RadzenButton Icon="delete" Text="Excluir" ButtonStyle="ButtonStyle.Danger" Click="@(() => Delete(c.Id))" />
+                <RadzenButton Icon="edit" Text="@Loc.Get("EditButton", currentLeanguage)" Click="@(() => ShowForm(c))" Style="margin-right: 5px;" />
+                <RadzenButton Icon="delete" Text="@Loc.Get("DeleteButton", currentLeanguage)" ButtonStyle="ButtonStyle.Danger" Click="@(() => Delete(c.Id))" />
             </Template>
         </RadzenDataGridColumn>
     </Columns>
@@ -110,9 +112,12 @@
     private List<Campaign> campaigns = new();
     private Campaign campaign = new();
     private bool showForm = false;
+    private string currentLeanguage => LangService.CurrentLanguage;
 
     protected override async Task OnInitializedAsync()
     {
+        LangService.OnLanguageChanged += LanguageChanged;
+
         campaigns = await CampaignService.GetAllAsync();
     }
 
@@ -149,5 +154,15 @@
     {
         await CampaignService.DeleteAsync(id);
         campaigns = await CampaignService.GetAllAsync();
+    }
+
+    private void LanguageChanged()
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        LangService.OnLanguageChanged -= LanguageChanged;
     }
 }

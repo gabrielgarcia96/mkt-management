@@ -17,6 +17,11 @@
         },
         "runtime": {
           "Marketing.App.dll": {}
+        },
+        "resources": {
+          "pt/Marketing.App.resources.dll": {
+            "locale": "pt"
+          }
         }
       },
       "BCrypt.Net-Next/4.0.3": {

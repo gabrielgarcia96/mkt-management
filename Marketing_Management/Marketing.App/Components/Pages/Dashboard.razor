@@ -1,27 +1,30 @@
 ﻿@page "/dashboard"
+@using Marketing.App.Security
 @using Marketing.Application.Interfaces
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+
+@inject LanguageService LangService
 @inject ICustomerService CustomerService
 @inject ICampaignService CampaignService
 @inject ILeadService LeadService
 @inject ProtectedLocalStorage localStorage
 @inject NavigationManager Navigation
 
-<h2>Dashboard Indices</h2>
+<h2>@Loc.Get("DashboardTitle", currentLanguage)</h2>
 
 <div class="dashboard-cards">
 	<div class="card">
-		<h3>Empresas Registradas</h3>
+		<h3>@Loc.Get("CompaniesButton", currentLanguage)</h3>
 		<p>@totalCompanies</p>
 	</div>
 
 	<div class="card">
-		<h3>Campanhas em Andamento</h3>
+		<h3>@Loc.Get("CampaignsLabel", currentLanguage)</h3>
 		<p>@activeCampaigns</p>
 	</div>
 
 	<div class="card">
-		<h3>Leads no Mês</h3>
+		<h3>@Loc.Get("LeadsLabel", currentLanguage)</h3>
 		<p>@monthlyLeads</p>
 	</div>
 </div>
@@ -63,9 +66,12 @@
 	private int totalCompanies;
 	private int activeCampaigns;
 	private int monthlyLeads;
+	private string currentLanguage => LangService.CurrentLanguage;
 
 	protected override async Task OnInitializedAsync()
 	{
+		LangService.OnLanguageChanged += LanguageChanged;
+
 		var tokenResult = await localStorage.GetAsync<string>("auth_token");
 		if (!tokenResult.Success || string.IsNullOrEmpty(tokenResult.Value))
 		{
@@ -79,7 +85,17 @@
 		var campaigns = await CampaignService.GetAllAsync(); 
 		activeCampaigns = campaigns.Count(c => c.IsActive);
 
-		var leads = await LeadService.GetAllAsync(); // Supondo que esse método exista
+		var leads = await LeadService.GetAllAsync();
 		monthlyLeads = leads.Count();
+	}
+
+	private void LanguageChanged()
+	{
+		StateHasChanged();
+	}
+
+	public void Dispose()
+	{
+		LangService.OnLanguageChanged -= LanguageChanged;
 	}
 }

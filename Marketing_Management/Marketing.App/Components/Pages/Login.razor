@@ -14,28 +14,40 @@
 @inject IConfiguration Configuration
 @inject IHttpContextAccessor HttpContextAccessor
 @inject AuthService authService
+@inject LanguageService LangService
 
 
 <RadzenRow Gap="0" class="rz-my-12 rz-mx-auto rz-border-radius-6 rz-shadow-10" Style="width: 100%; max-width: 800px; overflow: hidden;">
 	<RadzenColumn Size="12" SizeMD="6">
 		<RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-text-align-center rz-p-12"
-					Style="height: 100%; background: linear-gradient(160deg, #00ff41 0%, #003300 100%); color: #ffffff;">
-			<RadzenText TextStyle="TextStyle.DisplayH5" TagName="TagName.H2" class="rz-color-white rz-mb-6">@(currentLanguage == "pt" ? "Bem Vindo" : "Welcome To")</RadzenText>
-			<RadzenText TextStyle="TextStyle.DisplayH3" class="rz-color-white">Marketing Managment</RadzenText>
-			<RadzenText TextStyle="TextStyle.Body1" class="rz-color-white">manage your customers.</RadzenText>
+		Style="height: 100%; background: linear-gradient(160deg, #00ff41 0%, #003300 100%); color: #ffffff;">
+			<RadzenText TextStyle="TextStyle.DisplayH5" TagName="TagName.H2" class="rz-color-white rz-mb-6">
+				@Loc.Get("WelcomeTitle", currentLanguage)
+			</RadzenText>
+			<RadzenText TextStyle="TextStyle.DisplayH3" class="rz-color-white">
+				@Loc.Get("MarketingLabel", currentLanguage)
+			</RadzenText>
+			<RadzenText TextStyle="TextStyle.Body1" class="rz-color-white">
+				@Loc.Get("ManageText", currentLanguage)
+			</RadzenText>
 		</RadzenCard>
 	</RadzenColumn>
 	<RadzenColumn Size="12" SizeMD="6">
 
 		<RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-p-12">
 			<div class="rz-text-align-right rz-mb-2">
-				<RadzenButton Text="Português" Click="@(() => ChangeLanguage("pt"))"
-							  ButtonStyle="ButtonStyle.Light"
-							  Style="margin-bottom: 10px;" />
+				<RadzenDropDown @bind-Value="currentLanguage"
+				Style="width: 150px"
+				Data="@languages"
+				TextProperty="Text"
+				ValueProperty="Value"
+				Change="@(args => ChangeLanguage(args.ToString()))"
+				Placeholder="@Loc.Get("SelectLanguage", currentLanguage)" />
+
 			</div>
 
 			<RadzenText TextStyle="TextStyle.H5" TagName="TagName.H2" class="rz-mb-6">
-				@(currentLanguage == "pt" ? "Entrar" : "Login")
+				@Loc.Get("LoginTitle", currentLanguage)
 			</RadzenText>
 			@if (!string.IsNullOrEmpty(ErroMessage))
 			{
@@ -46,7 +58,7 @@
 				<ValidationSummary />
 				<div>
 					<RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">
-						@(currentLanguage == "pt" ? "Usuário" : "Username")
+						@Loc.Get("UsernameLabel", currentLanguage)
 					</RadzenText>
 					<RadzenTextBox @bind-Value="Logindto.Username" Style="width: 100%" aria-label="Default TextBox" />
 
@@ -54,20 +66,20 @@
 
 				<div>
 					<RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">
-						@(currentLanguage == "pt" ? "Senha" : "Password")
+						@Loc.Get("PasswordLabel", currentLanguage)
 					</RadzenText>
 					<RadzenPassword @bind-Value="Logindto.Password" Style="width: 100%" AutoComplete="false" aria-label="enter password" />
 				</div>
 
 				<div style="margin-top: 30px">
 
-					<RadzenButton Text="@(currentLanguage == "pt" ? "Entrar" : "Login")"
-								  ButtonType="ButtonType.Submit"
-								  ButtonStyle="ButtonStyle.Success" />
+					<RadzenButton Text="@Loc.Get("LoginButton", currentLanguage)"
+					ButtonType="ButtonType.Submit"
+					ButtonStyle="ButtonStyle.Success" />
 				</div>
 			</EditForm>
 			<div class="rz-p-12 rz-text-align-center">
-				<RadzenLink @onclick="NavigatePage" Text="@(currentLanguage == "pt" ? "Registrar" : "Go to register")" />
+				<RadzenLink @onclick="NavigatePage" Text="@Loc.Get("RegisterLink", currentLanguage)" />
 			</div>
 
 		</RadzenCard>
@@ -80,13 +92,30 @@
 	private LoginDto Logindto { get; set; } = new();
 	private string? ErroMessage { get; set; }
 	private string currentLanguage = "en";
+	private List<LanguageItem> languages => new()
+{
+	new LanguageItem { Text = Loc.Get("Portuguese", currentLanguage), Value = "pt" },
+	new LanguageItem { Text = Loc.Get("English", currentLanguage), Value = "en" }
+};
+	private bool initialized = false;
 
 
-	protected override async Task OnInitializedAsync()
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
+		if (firstRender && !initialized)
+		{
+			var result = await localStorage.GetAsync<string>("selectedLanguage");
+			if (result.Success && !string.IsNullOrEmpty(result.Value))
+			{
+				currentLanguage = result.Value;
 
-		// await CustomAuth.GetAuthenticationStateAsync();
-		// await base.OnInitializedAsync();
+				
+				StateHasChanged();
+			}
+
+			initialized = true;
+		}
 	}
 
 
@@ -100,7 +129,7 @@
 			{
 				var token = JwtHelper.GenerateToken(user.Username, user.Roles.ToString(), Configuration);
 
-				
+
 				await localStorage.SetAsync("auth_token", token);
 				authService.SetLoggedIn(true, user);
 				await localStorage.SetAsync("auth_user", JsonSerializer.Serialize(user));
@@ -122,9 +151,11 @@
 		Navigation.NavigateTo("/register");
 	}
 
-	private void ChangeLanguage(string lang)
+	private async Task ChangeLanguage(string lang)
 	{
-		currentLanguage = lang;
+		LangService.CurrentLanguage = lang;
+		await localStorage.SetAsync("selectedLanguage", lang);
 	}
+
 
 }

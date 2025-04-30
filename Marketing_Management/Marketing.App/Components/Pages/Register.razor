@@ -4,30 +4,34 @@
 @using Marketing.Application.Interfaces
 @using Marketing.App.Security
 
+@implements IDisposable
 @inject IAccountService AccountService
 @inject NavigationManager Navigation
 @inject Radzen.NotificationService notification
+@inject LanguageService LangService
 
 <RadzenRow Gap="0" class="rz-my-12 rz-mx-auto rz-border-radius-6 rz-shadow-10" Style="width: 100%; max-width: 800px; overflow: hidden;">
     <RadzenColumn Size="12" SizeMD="6">
         <RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-text-align-center rz-p-12"
-                    Style="height: 100%; background: linear-gradient(160deg, #00ff41 0%, #003300 100%); color: #ffffff;">
-            <RadzenText TextStyle="TextStyle.DisplayH5" TagName="TagName.H2" class="rz-color-white rz-mb-6">Welcome To</RadzenText>
-            <RadzenText TextStyle="TextStyle.DisplayH3" class="rz-color-white">Marketing Managment</RadzenText>
-            <RadzenText TextStyle="TextStyle.Body1" class="rz-color-white">manage your customers.</RadzenText>
+        Style="height: 100%; background: linear-gradient(160deg, #00ff41 0%, #003300 100%); color: #ffffff;">
+            <RadzenText TextStyle="TextStyle.DisplayH5" TagName="TagName.H2" class="rz-color-white rz-mb-6">@Loc.Get("WelcomeTitle", currentLanguage)</RadzenText>
+            <RadzenText TextStyle="TextStyle.DisplayH3" class="rz-color-white">@Loc.Get("MarketingLabel", currentLanguage)</RadzenText>
+            <RadzenText TextStyle="TextStyle.Body1" class="rz-color-white">@Loc.Get("ManageText", currentLanguage)</RadzenText>
         </RadzenCard>
     </RadzenColumn>
     <RadzenColumn Size="12" SizeMD="6">
         <RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-p-12">
             <RadzenText TextStyle="TextStyle.H5" TagName="TagName.H2" class="rz-mb-6">
-                Register
+                @Loc.Get("RegisterTitle", currentLanguage)
             </RadzenText>
             <EditForm Model="registerDto" FormName="RegisterForm" OnValidSubmit="HandleRegister">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
                 <div>
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Username</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">
+                        @Loc.Get("UsernameLabel", currentLanguage)
+                        </RadzenText>
                     <RadzenTextBox @bind-Value="registerDto.Username" Style="width: 100%" aria-label="Default TextBox" />
                 </div>
 
@@ -37,20 +41,20 @@
                 </div>
 
                 <div>
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Password</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">@Loc.Get("PasswordLabel", currentLanguage)</RadzenText>
                     <RadzenPassword @bind-Value="registerDto.Password" Style="width: 100%" AutoComplete="false" aria-label="enter password" />
                 </div>
                 <div>
-                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Confirm Password</RadzenText>
+                    <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">@Loc.Get("ConfirmPassLabel", currentLanguage)</RadzenText>
                     <RadzenPassword @bind-Value="registerDto.ConfirmPassword" Style="width: 100%" AutoComplete="false" aria-label="enter password" />
                 </div>
 
                 <div style="margin-top: 30px">
-                    <RadzenButton ButtonType="ButtonType.Submit" Text="Register" ButtonStyle="ButtonStyle.Success" />
+                    <RadzenButton ButtonType="ButtonType.Submit" Text="@Loc.Get("RegisterButton", currentLanguage)" ButtonStyle="ButtonStyle.Success" />
                 </div>
             </EditForm>
             <div class="rz-p-12 rz-text-align-center">
-                <RadzenLink @onclick="NavigatePage" Text="Go to login" />
+                <RadzenLink @onclick="NavigatePage" Text="@Loc.Get("LoginLink", currentLanguage)" />
             </div>
         </RadzenCard>
     </RadzenColumn>
@@ -60,9 +64,29 @@
 @code {
     [SupplyParameterFromForm]
     private RegisterDto registerDto { get; set; } = new();
+    private string currentLanguage => LangService.CurrentLanguage;
+    private List<LanguageItem> languages => new()
+{
+    new LanguageItem { Text = Loc.Get("Portuguese", currentLanguage), Value = "pt" },
+    new LanguageItem { Text = Loc.Get("English", currentLanguage), Value = "en" }
+};
 
-    protected override void OnInitialized() => registerDto ??= new();
 
+    protected override void OnInitialized()
+    {
+        LangService.OnLanguageChanged += LanguageChanged;
+        registerDto ??= new();
+    }
+
+    private void LanguageChanged()
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        LangService.OnLanguageChanged -= LanguageChanged;
+    }
 
     public async Task HandleRegister()
     {

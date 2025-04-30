@@ -94,6 +94,9 @@ builder.Services.AddSingleton<ConfigurationMongoDb>(provider =>
 //    provider.GetRequiredService<CustomAuthProvider>());
 //builder.Services.AddScoped<CustomAuthProvider>();
 
+builder.Services.AddSingleton<LanguageService>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

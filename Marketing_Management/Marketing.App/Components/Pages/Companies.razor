@@ -11,6 +11,7 @@
 @inject NavigationManager Navigation
 @inject ICustomerService CustomerService
 @inject NotificationService notification
+@inject LanguageService LangService
 
 <style>
 	.matrix-modal-overlay {
@@ -49,65 +50,65 @@
 </style>
 
 
-<h2>Companies</h2>
+<h2>@Loc.Get("CompanieTitle", currentLanguage)</h2>
 
-<RadzenButton Text="Register Companie" ButtonStyle="ButtonStyle.Success" Click="@ShowModal" />
+<RadzenButton Text="@Loc.Get("RegisterCompanieTitle", currentLanguage)" ButtonStyle="ButtonStyle.Success" Click="@ShowModal" />
 
 
 @if (showModal)
 {
 	<div class="matrix-modal-overlay">
 		<div class="matrix-modal">
-			<h3 style="color: #00FF00;">Register New Customer</h3>
+			<h3 style="color: #00FF00;">@Loc.Get("RegisterNewCustomerText", currentLanguage)</h3>
 			<EditForm Model="@newCustomer" OnSubmit="@(isEditing ? UpdateCustomer : RegisterCustomer)"> @* OnValidSubmit="@RegisterCustomer"> *@
 				<div class="form-grid">
 					<div class="form-grid-item">
-						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Trade name (DBA):</RadzenText>
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("TradeNameLabel", currentLanguage)</RadzenText>
 						<RadzenTextBox @bind-Value="newCustomer.Name" style="width: 100%;" />
 					</div>
 
 					<div class="form-grid-item">
-						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">E-mail:</RadzenText>
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">E-mail</RadzenText>
 						<RadzenTextBox @bind-Value="newCustomer.Email" style="width: 100%;" />
 					</div>
 
 					<div class="form-grid-item">
-						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Cnpj:</RadzenText>
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Cnpj</RadzenText>
 						<RadzenTextBox @bind-Value="newCustomer.Cnpj" style="width: 100%;" />
 					</div>
 
 					<div class="form-grid-item">
-						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Postal Code:</RadzenText>
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("PostalCodeLabel", currentLanguage)</RadzenText>
 						<RadzenTextBox @bind-Value="newCustomer.PostalCode" style="width: 100%;" />
 					</div>
 
 					<div class="form-grid-item">
-						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Address:</RadzenText>
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("AddressLabel", currentLanguage)</RadzenText>
 						<RadzenTextBox @bind-Value="newCustomer.Address" style="width: 100%;" />
 					</div>
 
 					<div class="form-grid-item">
-						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">City:</RadzenText>
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("CityLabel", currentLanguage)</RadzenText>
 						<RadzenTextBox @bind-Value="newCustomer.City" style="width: 100%;" />
 					</div>
 
 					<div class="form-grid-item">
-						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Region:</RadzenText>
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("RegionLabel", currentLanguage)</RadzenText>
 						<RadzenTextBox @bind-Value="newCustomer.Region" style="width: 100%;" />
 					</div>
 
 					<div class="form-grid-item">
-						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Type Contract:</RadzenText>
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("TypeContractLabel", currentLanguage)</RadzenText>
 						<RadzenTextBox @bind-Value="newCustomer.TypeContract" style="width: 100%;" />
 					</div>
 
 					<div class="form-grid-item">
-						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Contract Start Date:</RadzenText>
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("StartDate", currentLanguage)</RadzenText>
 						<RadzenDatePicker @bind-Value="newCustomer.ContractStartDate" style="width: 100%;" />
 					</div>
 
 					<div class="form-grid-item">
-						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Contract End Date:</RadzenText>
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("EndDate", currentLanguage)</RadzenText>
 						<RadzenDatePicker @bind-Value="newCustomer.ContractEndDate" style="width: 100%;" />
 					</div>
 
@@ -118,8 +119,8 @@
 				</div>
 
 
-				<RadzenButton Text="Save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Style="margin-top: 10px;" />
-				<RadzenButton Text="Cancel" ButtonStyle="ButtonStyle.Light" Click="@(() => showModal = false)" Style="margin-top: 10px; margin-left: 10px;" />
+				<RadzenButton Text="@Loc.Get("SaveButton", currentLanguage)" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Style="margin-top: 10px;" />
+				<RadzenButton Text="@Loc.Get("CancelButton", currentLanguage)" ButtonStyle="ButtonStyle.Light" Click="@(() => showModal = false)" Style="margin-top: 10px; margin-left: 10px;" />
 			</EditForm>
 
 		</div>
@@ -128,15 +129,15 @@
 
 <RadzenDataGrid TItem="Customer" Style="margin-top: 20px;" PageSize="10" AllowPaging="true" AllowSorting="true" Data="@ListCustomer" ColumnWidth="400px">
 	<Columns>
-		<RadzenDataGridColumn Property="Name" Title="Trade Name" Width="50px" />
+		<RadzenDataGridColumn Property="Name" Title="@Loc.Get("TradeNameLabel", currentLanguage)" Width="50px" />
 		<RadzenDataGridColumn Property="Cnpj" Title="Cnpj" Width="100px" />
-		<RadzenDataGridColumn Property="TypeContract" Title="Type Contract" Width="100px" />
-		<RadzenDataGridColumn Property="ContractStartDate" Title="Start Date" Width="100px">
+		<RadzenDataGridColumn Property="TypeContract" Title="@Loc.Get("TypeContractLabel", currentLanguage)" Width="100px" />
+		<RadzenDataGridColumn Property="ContractStartDate" Title="@Loc.Get("StartDate", currentLanguage)" Width="100px">
 			<Template Context="customer">
 				@customer.ContractStartDate.ToLocalTime().ToString("yyyy-MM-dd")
 			</Template>
 		</RadzenDataGridColumn>
-		<RadzenDataGridColumn Property="ContractEndDate" Title="End Date" Width="100px">
+		<RadzenDataGridColumn Property="ContractEndDate" Title="@Loc.Get("EndDate", currentLanguage)" Width="100px">
 			<Template Context="customer">
 				@customer.ContractEndDate.ToLocalTime().ToString("yyyy-MM-dd")
 			</Template>
@@ -145,8 +146,8 @@
 
 		<RadzenDataGridColumn Title="Actions" Width="200px">
 			<Template Context="customer">
-				<RadzenButton Icon="edit" Text="Edit" Click="@(args => EditCustomer(customer))" Style="margin-right: 10px;" />
-				<RadzenButton Icon="delete" Text="Delete" Click="@(args => DeleteCustomer(customer.Cnpj))" ButtonStyle="ButtonStyle.Danger" />
+				<RadzenButton Icon="edit" Text="@Loc.Get("EditButton", currentLanguage)" Click="@(args => EditCustomer(customer))" Style="margin-right: 10px;" />
+				<RadzenButton Icon="delete" Text="@Loc.Get("DeleteButton", currentLanguage)" Click="@(args => DeleteCustomer(customer.Cnpj))" ButtonStyle="ButtonStyle.Danger" />
 			</Template>
 		</RadzenDataGridColumn>
 	</Columns>
@@ -161,10 +162,12 @@
 	private string submitButtonText = "Register";
 	private Customer newCustomer = new();
 	private List<Customer> ListCustomer = new();
+	private string currentLanguage => LangService.CurrentLanguage;
 
 
 	protected override async Task OnInitializedAsync()
 	{
+		LangService.OnLanguageChanged += LanguageChanged;
 
 		var allCustomer = await CustomerService.GetAllCustomersAsync();
 		ListCustomer = allCustomer.Where(c => c.Status == true).ToList();
@@ -189,8 +192,8 @@
 
 		Console.WriteLine($"Customer: {newCustomer.Name}, {newCustomer.Email}");
 
-		showModal = false; // Fecha o modal após salvar
-		newCustomer = new(); // Limpa o formulário
+		showModal = false; 
+		newCustomer = new();
 		ListCustomer = (await CustomerService.GetAllCustomersAsync()).Where(c => c.Status == true).ToList();
 	}
 
@@ -265,6 +268,16 @@
 		await CustomerService.DeleteCustomerAsync(customerCnpj);
 		ListCustomer = await CustomerService.GetAllCustomersAsync();
 		notification.Notify(Radzen.NotificationSeverity.Success, "Customer Deleted!");
+	}
+
+	private void LanguageChanged()
+	{
+		StateHasChanged();
+	}
+
+	public void Dispose()
+	{
+		LangService.OnLanguageChanged -= LanguageChanged;
 	}
 
 }
