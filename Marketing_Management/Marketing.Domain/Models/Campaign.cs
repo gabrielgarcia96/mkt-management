@@ -15,4 +15,8 @@ public class Campaign
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public bool IsActive { get; set; }
+    public string ThemeColor { get; set; }
+    public string CustomerId { get; set; }
+    public string CustomerName { get; set; } 
+
 }
