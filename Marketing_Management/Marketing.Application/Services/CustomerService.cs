@@ -61,9 +61,10 @@ public class CustomerService : ICustomerService
         await _customerRepository.CreateCustomerAsync(newCustomer);
     }
 
-    public Task UpdateCustomerAsync(string customerCnpj, Customer customer)
+    public async Task UpdateCustomerAsync(string customerCnpj, Customer customer)
     {
-        return _customerRepository.UpdateCustomer(customerCnpj, customer);
+        await _customerRepository.UpdateCustomer(customerCnpj, customer);
+       
     }
 
 

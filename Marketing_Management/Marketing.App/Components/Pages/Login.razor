@@ -20,7 +20,7 @@
 <RadzenRow Gap="0" class="rz-my-12 rz-mx-auto rz-border-radius-6 rz-shadow-10" Style="width: 100%; max-width: 800px; overflow: hidden;">
 	<RadzenColumn Size="12" SizeMD="6">
 		<RadzenCard class="rz-shadow-0 rz-border-radius-0 rz-text-align-center rz-p-12"
-		Style="height: 100%; background: linear-gradient(160deg, #00ff41 0%, #003300 100%); color: #ffffff;">
+					Style="height: 100%; background: #d4af37; color: #ffffff;">
 			<RadzenText TextStyle="TextStyle.DisplayH5" TagName="TagName.H2" class="rz-color-white rz-mb-6">
 				@Loc.Get("WelcomeTitle", currentLanguage)
 			</RadzenText>
@@ -75,7 +75,7 @@
 
 					<RadzenButton Text="@Loc.Get("LoginButton", currentLanguage)"
 					ButtonType="ButtonType.Submit"
-					ButtonStyle="ButtonStyle.Success" />
+								  Style="background: #d4af37;" />
 				</div>
 			</EditForm>
 			<div class="rz-p-12 rz-text-align-center">
@@ -105,18 +105,33 @@
 	{
 		if (firstRender && !initialized)
 		{
-			var result = await localStorage.GetAsync<string>("selectedLanguage");
-			if (result.Success && !string.IsNullOrEmpty(result.Value))
+			var resultLang = await localStorage.GetAsync<string>("selectedLanguage");
+			if (resultLang.Success && !string.IsNullOrEmpty(resultLang.Value))
 			{
-				currentLanguage = result.Value;
-
-				
+				currentLanguage = resultLang.Value;
 				StateHasChanged();
+			}
+
+			// VERIFICAÇÃO DE LOGIN JÁ REALIZADO
+			var resultUser = await localStorage.GetAsync<string>("auth_user");
+			if (resultUser.Success && !string.IsNullOrEmpty(resultUser.Value))
+			{
+				var userData = JsonSerializer.Deserialize<LoginDto>(resultUser.Value, new JsonSerializerOptions
+					{
+						PropertyNameCaseInsensitive = true
+					});
+
+				authService.SetLoggedIn(true, userData);
+
+				// REDIRECIONA PARA O DASHBOARD
+				Navigation.NavigateTo("/dashboard", true);
+				return;
 			}
 
 			initialized = true;
 		}
 	}
+
 
 
 	public async Task HandleLogin()

@@ -23,11 +23,11 @@
     }
 
     .matrix-modal {
-    background-color: black;
-    border: 2px solid #00FF00;
+        background-color: #38474e;
+        border: 2px solid #d4af37;
     padding: 20px;
     width: 500px;
-    color: #00FF00;
+    color: #ffffff;
     border-radius: 8px;
     }
 
@@ -41,9 +41,22 @@
     display: flex;
     flex-direction: column;
     }
+
+    h2 {
+        display: flex;
+        justify-content: center;
+    }
+
+    h3 {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
 </style>
 
-<h2 style="color:#00FF00;">@Loc.Get("CampaignsTitle", currentLeanguage)</h2>
+@* <h2 style="color:#ffffff;">@Loc.Get("CampaignsTitle", currentLeanguage)</h2> *@
+<h2 style="color: #ffffff;">@Loc.Get("CampaignsLabel", currentLeanguage)</h2>
 
 <RadzenButton Text="@Loc.Get("NewCampaignButton", currentLeanguage)" ButtonStyle="ButtonStyle.Success" Click="@(() => ShowForm(new Campaign()))" Style="margin-bottom: 10px;" />
 
@@ -51,7 +64,7 @@
 {
     <div class="matrix-modal-overlay">
         <div class="matrix-modal">
-            <h3 style="color: #00FF00;">Register/Edit Campaign</h3>
+            <h3 style="color: #ffffff;">Register/Edit Campaign</h3>
 
             <EditForm Model="@campaign" OnValidSubmit="@Save">
                 <div class="form-grid">
@@ -76,26 +89,23 @@
                     </div>
 
                     <div class="form-grid-item">
-                        <RadzenText Style="color: #fff; font-weight: bold;">Empresa</RadzenText>
+                        <RadzenText Style="color: #fff; font-weight: bold;">@Loc.Get("CompanieLabel", currentLeanguage)</RadzenText>
                         <RadzenDropDown @bind-Value="campaign.CustomerId"
                                         Data="@companies"
                                         TextProperty="Name"
                                         ValueProperty="Id"
                                         Change="@(args => SetCustomerName(args))"
                                         Style="width: 100%;"
-                                        Placeholder="Selecione a empresa" />
+                                        Placeholder="@Loc.Get("SelectCompanieLabel", currentLeanguage)" />
                     </div>
 
                     <div class="form-grid-item">
-                        <RadzenText Style="color: #fff; font-weight: bold;">Cor da campanha</RadzenText>
+                        <RadzenText Style="color: #fff; font-weight: bold;">@Loc.Get("ColorLabel", currentLeanguage)</RadzenText>
                          <RadzenColorPicker @bind-Value="campaign.ThemeColor" Style="width: 30%; margin-top: 5px;" />
                        
                     </div>
 
-                    <div class="form-grid-item" style="grid-column: span 2;">
-                        <RadzenCheckBox @bind-Value="campaign.IsActive" />
-                        <label style="color: #00FF00; margin-left: 10px;">Active</label>
-                    </div>
+                    
                 </div>
 
                 <RadzenButton Text="@Loc.Get("SaveButton", currentLeanguage)" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Style="margin-top: 10px;" />
@@ -105,7 +115,8 @@
     </div>
 }
 
-<RadzenDataGrid Data="@campaigns" TItem="Campaign" AllowPaging="true" PageSize="10" Style="margin-top: 20px;" ColumnWidth="100px">
+
+<RadzenDataGrid Data="@activeCampaigns" TItem="Campaign" AllowPaging="true" PageSize="10" Style="margin-top: 20px;" ColumnWidth="100px">
     <Columns>
         <RadzenDataGridColumn Property="Name" Title="@Loc.Get("CampaignNameLabel", currentLeanguage)" Width="120px" />
 
@@ -117,9 +128,9 @@
             </Template>
         </RadzenDataGridColumn>
 
-        <RadzenDataGridColumn Property="CustomerName" Title="Empresa" Width="120px" />
+        <RadzenDataGridColumn Property="CustomerName" Title="@Loc.Get("CompanieLabel", currentLeanguage)" Width="120px" />
 
-        <RadzenDataGridColumn Title="Cor" Width="60px">
+        <RadzenDataGridColumn Title="@Loc.Get("Color", currentLeanguage)" Width="60px">
             <Template Context="c">
                 <div style="width: 20px; height: 20px; border-radius: 3px; background-color: @c.ThemeColor; border: 1px solid #ccc;"></div>
             </Template>
@@ -133,12 +144,34 @@
             <Template Context="c">@c.EndDate.ToShortDateString()</Template>
         </RadzenDataGridColumn>
 
-        <RadzenDataGridColumn Property="IsActive" Title="Ativo" Width="70px" />
+       <RadzenDataGridColumn Title="@Loc.Get("CompletedLabel", currentLeanguage)" Width="100px">
+    <Template Context="c">
+        <RadzenCheckBox TValue="bool" Value="@c.IsCompleted" Change="@(_ => ToggleCompleted(c))" />
+    </Template>
+</RadzenDataGridColumn>
 
         <RadzenDataGridColumn Title="Ações" Width="100px">
             <Template Context="c">
-                <RadzenButton Icon="edit" Size="ButtonSize.Small" Style="margin-right: 4px;" Click="@(() => ShowForm(c))" />
+                <RadzenButton Icon="edit" Size="ButtonSize.Small" Style="margin-right: 4px; background: #8e00d2;" Click="@(() => ShowForm(c))" />
                 <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Click="@(() => Delete(c.Id))" />
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+
+<h3 style="color: #ffff;">@Loc.Get("CompletedCampaignsLabel", currentLeanguage)</h3>
+
+<RadzenDataGrid Data="@completedCampaigns" TItem="Campaign" AllowPaging="true" PageSize="10" ColumnWidth="100px">
+    <Columns>
+        <RadzenDataGridColumn Property="Name" Title="@Loc.Get("CampaignNameLabel", currentLeanguage)" Width="120px" />
+        <RadzenDataGridColumn Property="Description" Title="@Loc.Get("DescriptionLabel", currentLeanguage)" Width="150px" />
+        <RadzenDataGridColumn Property="CustomerName" Title="@Loc.Get("CompanieLabel", currentLeanguage)" Width="120px" />
+        <RadzenDataGridColumn Property="StartDate" Title="@Loc.Get("StartDateLabel", currentLeanguage)" Width="100px" />
+        <RadzenDataGridColumn Property="EndDate" Title="@Loc.Get("EndDateLabel", currentLeanguage)" Width="100px" />
+        <RadzenDataGridColumn Title="@Loc.Get("CompletedLabel", currentLeanguage)" Width="100px">
+            <Template Context="c">
+                <RadzenCheckBox TValue="bool" Value="@c.IsCompleted" Change="@(_ => ToggleCompleted(c))" />
             </Template>
         </RadzenDataGridColumn>
     </Columns>
@@ -147,35 +180,40 @@
 
 
 
+
 @code {
-    private List<Campaign> campaigns = new();
+    private List<Campaign> activeCampaigns = new();
+    private List<Campaign> completedCampaigns = new();
     private Campaign campaign = new();
     private bool showForm = false;
     private string currentLeanguage => LangService.CurrentLanguage;
     private List<Customer> companies = new();
     private bool showColorPicker = false;
 
-    protected override async Task OnInitializedAsync()
+  protected override async Task OnInitializedAsync()
+{
+    LangService.OnLanguageChanged += LanguageChanged;
+    companies = await CustomerService.GetAllCustomersAsync();
+
+    await LoadCampaignsAsync();
+}
+
+   private async Task Save()
+{
+    if (string.IsNullOrEmpty(campaign.Id))
     {
-        LangService.OnLanguageChanged += LanguageChanged;
-        companies = await CustomerService.GetAllCustomersAsync();
-        campaigns = await CampaignService.GetAllAsync();
+        await CampaignService.CreateAsync(campaign);
+    }
+    else
+    {
+        await CampaignService.UpdateAsync(campaign.Id, campaign);
     }
 
-    private async Task Save()
-    {
-        if (string.IsNullOrEmpty(campaign.Id))
-        {
-            await CampaignService.CreateAsync(campaign);
-        }
-        else
-        {
-            await CampaignService.UpdateAsync(campaign.Id, campaign);
-        }
+    await LoadCampaignsAsync();
 
-        campaigns = await CampaignService.GetAllAsync();
-        showForm = false;
-    }
+    showForm = false;
+}
+
 
     private void ShowForm(Campaign c)
     {
@@ -186,7 +224,7 @@
                 Description = c.Description,
                 StartDate = c.StartDate,
                 EndDate = c.EndDate,
-                IsActive = c.IsActive
+                IsCompleted = c.IsCompleted
             };
         showForm = true;
     }
@@ -194,7 +232,7 @@
     private async Task Delete(string id)
     {
         await CampaignService.DeleteAsync(id);
-        campaigns = await CampaignService.GetAllAsync();
+        activeCampaigns = await CampaignService.GetAllAsync();
     }
 
     private void LanguageChanged()
@@ -215,4 +253,21 @@
             campaign.CustomerName = selectedCompany.Name;
         }
     }
+
+   private async Task ToggleCompleted(Campaign campaign)
+{
+    campaign.IsCompleted = !campaign.IsCompleted;
+    await CampaignService.UpdateAsync(campaign.Id, campaign);
+
+    await LoadCampaignsAsync();
+    StateHasChanged();
+}
+
+private async Task LoadCampaignsAsync()
+{
+    var allCampaigns = await CampaignService.GetAllAsync();
+    activeCampaigns = allCampaigns.Where(c => !c.IsCompleted).ToList();
+    completedCampaigns = allCampaigns.Where(c => c.IsCompleted).ToList();
+}
+
 }

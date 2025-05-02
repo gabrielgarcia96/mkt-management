@@ -28,11 +28,11 @@
 	}
 
 	.matrix-modal {
-	background-color: black;
-	border: 2px solid #00FF00;
+		background-color: #38474e;
+		border: 2px solid #d4af37;
 	padding: 20px;
 	width: 400px;
-	color: #00FF00;
+	color: #ffffff;
 	border-radius: 8px;
 	}
 	.form-grid
@@ -47,10 +47,19 @@
 	flex-direction: column;
 	}
 
+	h2{
+		display: flex;
+		justify-content: center;
+	}
+	h3{
+		display: flex;
+		justify-content: center;
+	}
 </style>
 
 
 <h2>@Loc.Get("CompanieTitle", currentLanguage)</h2>
+
 
 <RadzenButton Text="@Loc.Get("RegisterCompanieTitle", currentLanguage)" ButtonStyle="ButtonStyle.Success" Click="@ShowModal" />
 
@@ -59,7 +68,7 @@
 {
 	<div class="matrix-modal-overlay">
 		<div class="matrix-modal">
-			<h3 style="color: #00FF00;">@Loc.Get("RegisterNewCustomerText", currentLanguage)</h3>
+			<h3 style="color: #ffff;">@Loc.Get("RegisterNewCustomerText", currentLanguage)</h3>
 			<EditForm Model="@newCustomer" OnSubmit="@(isEditing ? UpdateCustomer : RegisterCustomer)"> @* OnValidSubmit="@RegisterCustomer"> *@
 				<div class="form-grid">
 					<div class="form-grid-item">
@@ -79,7 +88,7 @@
 
 					<div class="form-grid-item">
 						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("PostalCodeLabel", currentLanguage)</RadzenText>
-						<RadzenTextBox @bind-Value="newCustomer.PostalCode" style="width: 100%;" />
+						<RadzenTextBox @bind-Value="newCustomer.PostalCode" style="width: 100%;"  />
 					</div>
 
 					<div class="form-grid-item">
@@ -129,7 +138,7 @@
 
 <RadzenDataGrid TItem="Customer" Style="margin-top: 20px;" PageSize="10" AllowPaging="true" AllowSorting="true" Data="@ListCustomer" ColumnWidth="400px">
 	<Columns>
-		<RadzenDataGridColumn Property="Name" Title="@Loc.Get("TradeNameLabel", currentLanguage)" Width="50px" />
+		<RadzenDataGridColumn Property="Name" Title="@Loc.Get("TradeNameLabel", currentLanguage)" Width="200px" />
 		<RadzenDataGridColumn Property="Cnpj" Title="Cnpj" Width="100px" />
 		<RadzenDataGridColumn Property="TypeContract" Title="@Loc.Get("TypeContractLabel", currentLanguage)" Width="100px" />
 		<RadzenDataGridColumn Property="ContractStartDate" Title="@Loc.Get("StartDate", currentLanguage)" Width="100px">
@@ -144,16 +153,41 @@
 		</RadzenDataGridColumn>
 		<RadzenDataGridColumn Property="Status" Title="Status" Width="100px" />
 
-		<RadzenDataGridColumn Title="Actions" Width="200px">
+		<RadzenDataGridColumn Title="@Loc.Get("ActionsLabel", currentLanguage)" Width="200px">
 			<Template Context="customer">
-				<RadzenButton Icon="edit" Text="@Loc.Get("EditButton", currentLanguage)" Click="@(args => EditCustomer(customer))" Style="margin-right: 10px;" />
-				<RadzenButton Icon="delete" Text="@Loc.Get("DeleteButton", currentLanguage)" Click="@(args => DeleteCustomer(customer.Cnpj))" ButtonStyle="ButtonStyle.Danger" />
+				<RadzenButton Icon="edit" Size="ButtonSize.Small" Style="margin-right: 4px; background: #8e00d2;" Click="@(args => EditCustomer(customer))" />
+				<RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Click="@(args => DeleteCustomer(customer.Cnpj))" />
 			</Template>
 		</RadzenDataGridColumn>
 	</Columns>
 </RadzenDataGrid>
 
 
+<h3 style="margin-top: 40px;">@Loc.Get("InactiveCompaniesTitle", currentLanguage)</h3>
+
+<RadzenDataGrid TItem="Customer" PageSize="10" AllowPaging="true" AllowSorting="true" Data="@ListInactiveCustomers" ColumnWidth="400px">
+	<Columns>
+		<RadzenDataGridColumn Property="Name" Title="@Loc.Get("TradeNameLabel", currentLanguage)" Width="200px" />
+		<RadzenDataGridColumn Property="Cnpj" Title="Cnpj" Width="100px" />
+		<RadzenDataGridColumn Property="TypeContract" Title="@Loc.Get("TypeContractLabel", currentLanguage)" Width="100px" />
+		<RadzenDataGridColumn Property="ContractStartDate" Title="@Loc.Get("StartDate", currentLanguage)" Width="100px">
+			<Template Context="customer">
+				@customer.ContractStartDate.ToLocalTime().ToString("yyyy-MM-dd")
+			</Template>
+		</RadzenDataGridColumn>
+		<RadzenDataGridColumn Property="ContractEndDate" Title="@Loc.Get("EndDate", currentLanguage)" Width="100px">
+			<Template Context="customer">
+				@customer.ContractEndDate.ToLocalTime().ToString("yyyy-MM-dd")
+			</Template>
+		</RadzenDataGridColumn>
+		<RadzenDataGridColumn Title="@Loc.Get("ActionsLabel", currentLanguage)" Width="120px">
+			<Template Context="customer">
+				<RadzenButton Text="@Loc.Get("ActivateLabel", currentLanguage)" Icon="check" ButtonStyle="ButtonStyle.Success"
+							  Size="ButtonSize.Small" Click="@(args => ActivateCustomer(customer))" />
+			</Template>
+		</RadzenDataGridColumn>
+	</Columns>
+</RadzenDataGrid>
 
 
 @code {
@@ -162,6 +196,7 @@
 	private string submitButtonText = "Register";
 	private Customer newCustomer = new();
 	private List<Customer> ListCustomer = new();
+	private List<Customer> ListInactiveCustomers = new();
 	private string currentLanguage => LangService.CurrentLanguage;
 
 
@@ -169,10 +204,9 @@
 	{
 		LangService.OnLanguageChanged += LanguageChanged;
 
-		var allCustomer = await CustomerService.GetAllCustomersAsync();
-		ListCustomer = allCustomer.Where(c => c.Status == true).ToList();
-
+		await LoadCompaniesAsync();
 	}
+
 
 	private async Task RegisterCustomer()
 	{
@@ -194,7 +228,8 @@
 
 		showModal = false; 
 		newCustomer = new();
-		ListCustomer = (await CustomerService.GetAllCustomersAsync()).Where(c => c.Status == true).ToList();
+
+		await LoadCompaniesAsync();
 	}
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -247,21 +282,25 @@
 		try
 		{
 			await CustomerService.UpdateCustomerAsync(newCustomer.Cnpj, newCustomer);
-			ListCustomer = await CustomerService.GetAllCustomersAsync();
 
 			newCustomer = new();
 			showModal = false;
 			isEditing = false;
 
-			ListCustomer = (await CustomerService.GetAllCustomersAsync()).Where(c => c.Status == true).ToList();
+			var allCustomers = await CustomerService.GetAllCustomersAsync();
+			ListCustomer = allCustomers.Where(c => c.Status == true).ToList();
+
 			StateHasChanged();
-			notification.Notify(Radzen.NotificationSeverity.Success, "Product Updated Successfully!");
+			notification.Notify(Radzen.NotificationSeverity.Success, "Customer Updated Successfully!");
 		}
 		catch (Exception ex)
 		{
-			Console.WriteLine("Error updating Product: " + ex);
+			Console.WriteLine("Error updating customer: " + ex.Message);
 		}
+
+		await LoadCompaniesAsync();
 	}
+
 
 	private async Task DeleteCustomer(string customerCnpj)
 	{
@@ -280,5 +319,24 @@
 		LangService.OnLanguageChanged -= LanguageChanged;
 	}
 
+	private async Task LoadCompaniesAsync()
+	{
+		var allCustomers = await CustomerService.GetAllCustomersAsync();
+		ListCustomer = allCustomers.Where(c => c.Status == true).ToList();
+		ListInactiveCustomers = allCustomers.Where(c => c.Status == false).ToList();
+
+	}
+
+
+	private async Task ActivateCustomer(Customer customer)
+	{
+		customer.Status = true;
+
+		await CustomerService.UpdateCustomerAsync(customer.Cnpj, customer);
+
+		notification.Notify(Radzen.NotificationSeverity.Success,"Companie, Active Successfully!");
+		await LoadCompaniesAsync();
+
 }
 
+}

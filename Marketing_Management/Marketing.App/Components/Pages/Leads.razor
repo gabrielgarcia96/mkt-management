@@ -22,11 +22,11 @@
     }
 
     .matrix-modal {
-    background-color: black;
-    border: 2px solid #00FF00;
+        background-color: #38474e;
+        border: 2px solid #d4af37;
     padding: 20px;
     width: 500px;
-    color: #00FF00;
+    color: #ffffff;
     border-radius: 8px;
     }
 
@@ -40,9 +40,15 @@
     display: flex;
     flex-direction: column;
     }
+
+    h2 {
+        display: flex;
+        justify-content: center;
+    }
+
 </style>
 
-<h2 style="color:#00FF00;">@Loc.Get("LeadTitle", currentLanguage)</h2>
+<h2 style="color:#ffffff;">@Loc.Get("LeadTitle", currentLanguage)</h2>
 
 <RadzenButton Text="@Loc.Get("NewLeadButton", currentLanguage)" Click="ShowModal" ButtonStyle="ButtonStyle.Success" />
 
@@ -50,7 +56,7 @@
 {
     <div class="matrix-modal-overlay">
         <div class="matrix-modal">
-            <h3 style="color:#00FF00;">@Loc.Get("RegisterNewLeadLabel", currentLanguage)</h3>
+            <h3 style="color:#ffffff;">@Loc.Get("RegisterNewLeadLabel", currentLanguage)</h3>
             <EditForm Model="@newLead" OnValidSubmit="@RegisterLead">
                 <div class="form-grid">
                     <div class="form-grid-item">
@@ -83,7 +89,7 @@
         </RadzenDataGridColumn>
         <RadzenDataGridColumn Title="Actions">
             <Template Context="lead">
-                <RadzenButton Text="@Loc.Get("DeleteButton", currentLanguage)" ButtonStyle="ButtonStyle.Danger" Click="@(args => DeleteLead(lead.Id))" />
+                <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Click="@(args => DeleteLead(lead.Id))" />
             </Template>
         </RadzenDataGridColumn>
     </Columns>

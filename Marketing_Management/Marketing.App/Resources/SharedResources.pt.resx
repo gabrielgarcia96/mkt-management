@@ -135,11 +135,26 @@
   <data name="CityLabel" xml:space="preserve">
     <value>Cidade</value>
   </data>
+  <data name="Color" xml:space="preserve">
+    <value>Cor</value>
+  </data>
+  <data name="ColorLabel" xml:space="preserve">
+    <value>Cor da Campanha</value>
+  </data>
+  <data name="CompanieLabel" xml:space="preserve">
+    <value>Empresa</value>
+  </data>
   <data name="CompaniesButton" xml:space="preserve">
     <value>Empresas Registradas</value>
   </data>
   <data name="CompanieTitle" xml:space="preserve">
     <value>Empresas</value>
+  </data>
+  <data name="CompletedCampaignsLabel" xml:space="preserve">
+    <value>Campanhas concluidas</value>
+  </data>
+  <data name="CompletedLabel" xml:space="preserve">
+    <value>Concluída</value>
   </data>
   <data name="ConfirmPassLabel" xml:space="preserve">
     <value>Confirmar Senha</value>
@@ -245,5 +260,17 @@
   </data>
   <data name="WelcomeTitle" xml:space="preserve">
     <value>Bem-vindo</value>
+  </data>
+  <data name="SelectCompanieLabel" xml:space="preserve">
+    <value>Selecione a empresa</value>
+  </data>
+  <data name="InactiveCompaniesTitle" xml:space="preserve">
+    <value>Empresas Inativas</value>
+  </data>
+  <data name="ActivateLabel" xml:space="preserve">
+    <value>Ativar</value>
+  </data>
+  <data name="ActionsLabel" xml:space="preserve">
+    <value>Ações</value>
   </data>
 </root>

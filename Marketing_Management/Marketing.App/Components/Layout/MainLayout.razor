@@ -7,30 +7,35 @@
 
 @inject AuthService authService
 @inject ProtectedLocalStorage localStorage
+@inject NavigationManager Navigation
+@inject LanguageService LangService
 
 <RadzenComponents @rendermode="InteractiveServer" />
 
-<RadzenLayout style="position: relative;grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body'">
+
+
+<RadzenLayout Style="grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body'">
     <RadzenHeader>
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
             <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
             <RadzenLabel Text="Header" />
+            @if (authService.IsAdmin)
+            {
+                <RadzenButton Icon="logout" Style="margin-left: auto; margin-right: 10px;" Click="@Logoff" />
+            }
         </RadzenStack>
     </RadzenHeader>
-    <RadzenSidebar Responsive="false" @bind-Expanded="@sidebarExpanded" style="position: absolute; z-index: 3">
-        <RadzenStack AlignItems="AlignItems.End" class="rz-p-2">
-            <RadzenButton Icon="west" Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary" Click="@(() => sidebarExpanded = false)" />
-        </RadzenStack>
+    <RadzenSidebar @bind-Expanded="@sidebarExpanded">
         <RadzenPanelMenu>
             @if (authService.IsLoggedIn)
             {
-            @if (authService.IsAdmin)
-            {
-                <RadzenPanelMenuItem Text="Companie" Icon="apartment" Path="companies" />
-                <RadzenPanelMenuItem Text="Dashboard" Icon="dashboard" Path="dashboard" />
-                <RadzenPanelMenuItem Text="Campaign" Icon="campaign" Path="campaigns" />
-                <RadzenPanelMenuItem Text="Lead" Icon="man_4" Path="leads" />
-            }
+                @if (authService.IsAdmin)
+                {
+                    <RadzenPanelMenuItem Text="@Loc.Get("DashboardTitle", currentLanguage)" Icon="dashboard" Path="dashboard" />
+                    <RadzenPanelMenuItem Text="@Loc.Get("CompanieTitle", currentLanguage)" Icon="apartment" Path="companies" />
+                    <RadzenPanelMenuItem Text="@Loc.Get("CampaignsTitle", currentLanguage)" Icon="campaign" Path="campaigns" />
+                    <RadzenPanelMenuItem Text="Lead" Icon="man_4" Path="leads" />
+                }
             }
             else
             {
@@ -46,32 +51,23 @@
             @Body
         </div>
     </RadzenBody>
-    @if (sidebarExpanded)
-    {
-        <div @onclick="@(() => sidebarExpanded = false)" class="rz-dialog-mask" style="position: absolute; z-index: 2"></div>
-    }
 </RadzenLayout>
 
 @code {
     bool sidebarExpanded = true;
+    private string currentLanguage => LangService.CurrentLanguage;
 
 
-    // protected override async Task OnAfterRenderAsync(bool firstRender)
-    // {
-    //     if (firstRender)
-    //     {
-    //         var result = await localStorage.GetAsync<string>("auth_token");
-    //         authService.SetLoggedIn(result.Success && !string.IsNullOrEmpty(result.Value));
-    //         authService.OnChange += async () => await InvokeAsync(StateHasChanged);
-    //     }
-
-
-    // }
+    private void LanguageChanged()
+    {
+        StateHasChanged();
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            LangService.OnLanguageChanged += LanguageChanged;
             var result = await localStorage.GetAsync<string>("auth_user");
             if (result.Success && !string.IsNullOrEmpty(result.Value))
             {
@@ -95,5 +91,15 @@
     public void Dispose()
     {
         authService.OnChange -= StateHasChanged;
+        LangService.OnLanguageChanged -= LanguageChanged;
+    }
+
+    public async void Logoff()
+    {
+        await localStorage.DeleteAsync("auth_user");
+        await localStorage.DeleteAsync("auth_token");
+        await localStorage.DeleteAsync("selectedLanguage");
+        authService.SetLoggedIn(false);
+        Navigation.NavigateTo("/");
     }
 }
