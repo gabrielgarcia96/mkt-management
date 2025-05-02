@@ -15,91 +15,101 @@
 
 
 <RadzenLayout Style="grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body'">
-    <RadzenHeader>
-        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
-            <RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
-            <RadzenLabel Text="Header" />
-            @if (authService.IsAdmin)
-            {
-                <RadzenButton Icon="logout" Style="margin-left: auto; margin-right: 10px;" Click="@Logoff" />
-            }
-        </RadzenStack>
-    </RadzenHeader>
-    <RadzenSidebar @bind-Expanded="@sidebarExpanded">
-        <RadzenPanelMenu>
-            @if (authService.IsLoggedIn)
-            {
-                @if (authService.IsAdmin)
-                {
-                    <RadzenPanelMenuItem Text="@Loc.Get("DashboardTitle", currentLanguage)" Icon="dashboard" Path="dashboard" />
-                    <RadzenPanelMenuItem Text="@Loc.Get("CompanieTitle", currentLanguage)" Icon="apartment" Path="companies" />
-                    <RadzenPanelMenuItem Text="@Loc.Get("CampaignsTitle", currentLanguage)" Icon="campaign" Path="campaigns" />
-                    <RadzenPanelMenuItem Text="Lead" Icon="man_4" Path="leads" />
-                }
-            }
-            else
-            {
-                <RadzenPanelMenuItem Text="Login" Icon="login" Path="/" />
-            }
-        </RadzenPanelMenu>
-        <div class="rz-p-4">
-            Sidebar
-        </div>
-    </RadzenSidebar>
-    <RadzenBody>
-        <div class="rz-p-4">
-            @Body
-        </div>
-    </RadzenBody>
+	<RadzenHeader>
+		<RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+			<RadzenSidebarToggle Click="@(() => sidebarExpanded = !sidebarExpanded)" />
+			<RadzenLabel Text="Header" />
+			@if (authService.IsAdmin)
+			{
+				<RadzenButton Icon="logout" Style="margin-left: auto; margin-right: 10px;" Click="@Logoff" />
+			}
+		</RadzenStack>
+	</RadzenHeader>
+	<RadzenSidebar @bind-Expanded="@sidebarExpanded">
+		<RadzenPanelMenu>
+			@if (authService.IsLoggedIn)
+			{
+				@if (authService.IsAdmin)
+				{
+					<RadzenPanelMenuItem Text="@Loc.Get("DashboardTitle", currentLanguage)" Icon="dashboard" Path="dashboard" />
+					<RadzenPanelMenuItem Text="@Loc.Get("CompanieTitle", currentLanguage)" Icon="apartment" Path="companies" />
+					<RadzenPanelMenuItem Text="@Loc.Get("CampaignsTitle", currentLanguage)" Icon="campaign" Path="campaigns" />
+					<RadzenPanelMenuItem Text="Lead" Icon="man_4" Path="leads" />
+				}
+			}
+			else
+			{
+				<RadzenPanelMenuItem Text="Login" Icon="login" Path="/" />
+			}
+		</RadzenPanelMenu>
+		<div class="rz-p-4">
+			Sidebar
+		</div>
+	</RadzenSidebar>
+	<RadzenBody>
+		<div class="rz-p-4">
+			@Body
+		</div>
+	</RadzenBody>
 </RadzenLayout>
 
 @code {
-    bool sidebarExpanded = true;
-    private string currentLanguage => LangService.CurrentLanguage;
+	bool sidebarExpanded = true;
+	private string currentLanguage => LangService.CurrentLanguage;
 
 
-    private void LanguageChanged()
-    {
-        StateHasChanged();
-    }
+	private void LanguageChanged()
+	{
+		InvokeAsync(StateHasChanged);
+	}
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            LangService.OnLanguageChanged += LanguageChanged;
-            var result = await localStorage.GetAsync<string>("auth_user");
-            if (result.Success && !string.IsNullOrEmpty(result.Value))
-            {
-                var userData = JsonSerializer.Deserialize<LoginDto>(result.Value, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+	protected override void OnInitialized()
+	{
+		LangService.OnLanguageChanged += HandleLanguageChanged;
+	}
+	private void HandleLanguageChanged()
+	{
+		InvokeAsync(StateHasChanged); // Chama a atualização da UI de forma segura
+	}
 
-                authService.SetLoggedIn(true, userData);
-            }
-            else
-            {
-                authService.SetLoggedIn(false);
-            }
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			LangService.OnLanguageChanged += HandleLanguageChanged;
+			var result = await localStorage.GetAsync<string>("auth_user");
+			if (result.Success && !string.IsNullOrEmpty(result.Value))
+			{
+				var userData = JsonSerializer.Deserialize<LoginDto>(result.Value, new JsonSerializerOptions
+					{
+						PropertyNameCaseInsensitive = true
+					});
 
-            authService.OnChange += async () => await InvokeAsync(StateHasChanged);
-        }
-    }
+				authService.SetLoggedIn(true, userData);
+			}
+			else
+			{
+				authService.SetLoggedIn(false);
+			}
+
+			authService.OnChange += async () => await InvokeAsync(StateHasChanged);
+		}
+	}
 
 
-    public void Dispose()
-    {
-        authService.OnChange -= StateHasChanged;
-        LangService.OnLanguageChanged -= LanguageChanged;
-    }
+	public void Dispose()
+	{
+	    // authservice.onchange -= statehaschanged;
+	    // langservice.onlanguagechanged -= languagechanged;
+		LangService.OnLanguageChanged -= HandleLanguageChanged;
+	}
 
-    public async void Logoff()
-    {
-        await localStorage.DeleteAsync("auth_user");
-        await localStorage.DeleteAsync("auth_token");
-        await localStorage.DeleteAsync("selectedLanguage");
-        authService.SetLoggedIn(false);
-        Navigation.NavigateTo("/");
-    }
+	public async void Logoff()
+	{
+		await localStorage.DeleteAsync("auth_user");
+		await localStorage.DeleteAsync("auth_token");
+		await localStorage.DeleteAsync("selectedLanguage");
+		authService.SetLoggedIn(false);
+		Navigation.NavigateTo("/");
+	}
 }
