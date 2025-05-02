@@ -98,14 +98,10 @@
 	private int monthlyLeads;
 	private string currentLanguage => LangService.CurrentLanguage;
 
-	protected override async Task OnInitializedAsync()
+	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
 		LangService.OnLanguageChanged += LanguageChanged;
 
-	}
-
-	protected override async Task OnAfterRenderAsync(bool firstRender)
-	{
 		var tokenResult = await localStorage.GetAsync<string>("auth_token");
 		if (!tokenResult.Success || string.IsNullOrEmpty(tokenResult.Value))
 		{
