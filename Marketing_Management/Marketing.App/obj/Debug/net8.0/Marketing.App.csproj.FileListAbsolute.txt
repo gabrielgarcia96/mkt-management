@@ -175,3 +175,8 @@ C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Market
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Marketing.App.Resources.SharedResources.pt.resources
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Marketing.App.csproj.GenerateResource.cache
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\pt\Marketing.App.resources.dll
+C:\Github\mkt-management\Marketing_Management\Marketing.App\bin\Debug\net8.0\pt\Marketing.App.resources.dll
+C:\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Marketing.App.Resources.SharedResources.resources
+C:\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Marketing.App.Resources.SharedResources.pt.resources
+C:\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Marketing.App.csproj.GenerateResource.cache
+C:\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\pt\Marketing.App.resources.dll

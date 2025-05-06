@@ -34,7 +34,7 @@
 					<RadzenPanelMenuItem Text="@Loc.Get("DashboardTitle", currentLanguage)" Icon="dashboard" Path="dashboard" />
 					<RadzenPanelMenuItem Text="@Loc.Get("CompanieTitle", currentLanguage)" Icon="apartment" Path="companies" />
 					<RadzenPanelMenuItem Text="@Loc.Get("CampaignsTitle", currentLanguage)" Icon="campaign" Path="campaigns" />
-					<RadzenPanelMenuItem Text="Lead" Icon="man_4" Path="leads" />
+					<RadzenPanelMenuItem Text="CRM" Icon="man_4" Path="leads" />
 				}
 			}
 			else
@@ -69,7 +69,7 @@
 	}
 	private void HandleLanguageChanged()
 	{
-		InvokeAsync(StateHasChanged); // Chama a atualização da UI de forma segura
+		InvokeAsync(StateHasChanged);
 	}
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)

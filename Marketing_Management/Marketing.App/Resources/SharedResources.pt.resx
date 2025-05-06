@@ -226,13 +226,13 @@
     <value>Registrar</value>
   </data>
   <data name="RegisterCompanieTitle" xml:space="preserve">
-    <value>Registrar Companhia</value>
+    <value>Registrar Empresa</value>
   </data>
   <data name="RegisterLink" xml:space="preserve">
     <value>Registrar-se</value>
   </data>
   <data name="RegisterNewCustomerText" xml:space="preserve">
-    <value>Registrar Novo Cliente</value>
+    <value>Registrar Nova Empresa</value>
   </data>
   <data name="RegisterNewLeadLabel" xml:space="preserve">
     <value>Registrar Novo Lead</value>
@@ -272,5 +272,20 @@
   </data>
   <data name="ActionsLabel" xml:space="preserve">
     <value>Ações</value>
+  </data>
+  <data name="SocialReasonLabel" xml:space="preserve">
+    <value>Razão Social</value>
+  </data>
+  <data name="ObservationLabel" xml:space="preserve">
+    <value>Observação</value>
+  </data>
+  <data name="NoPotentialLabel" xml:space="preserve">
+    <value>Pouco Potencial</value>
+  </data>
+  <data name="PotentialLabel" xml:space="preserve">
+    <value>Potencial</value>
+  </data>
+  <data name="VeryPotentialLabel" xml:space="preserve">
+    <value>Muito Potencial</value>
   </data>
 </root>

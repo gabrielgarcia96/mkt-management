@@ -26,6 +26,7 @@ public class CustomerRepository : ICustomerRepository
         return _configmongoDb.CustomerCollection.Find(c => true)
             .Project(c => new Customer
             {
+                SocialReason = c.SocialReason,
                 Name = c.Name,
                 Cnpj = c.Cnpj,
                 City = c.City,
@@ -34,6 +35,7 @@ public class CustomerRepository : ICustomerRepository
                 TypeContract = c.TypeContract,
                 ContractStartDate = c.ContractStartDate,
                 ContractEndDate = c.ContractEndDate,
+                ContractFile = c.ContractFile,
                 Status = c.Status,
 
             }).ToListAsync();
@@ -55,6 +57,7 @@ public class CustomerRepository : ICustomerRepository
     {
         var filter = Builders<Customer>.Filter.Eq(c => c.Cnpj, customerCnpj);
         var update = Builders<Customer>.Update
+             .Set(c => c.SocialReason, customer.SocialReason)
              .Set(c => c.Name, customer.Name)
              .Set(c => c.Email, customer.Email)
              .Set(c => c.PostalCode, customer.PostalCode)
@@ -64,6 +67,7 @@ public class CustomerRepository : ICustomerRepository
              .Set(c => c.TypeContract, customer.TypeContract)
              .Set(c => c.ContractStartDate, customer.ContractStartDate)
              .Set(c  => c.ContractEndDate, customer.ContractEndDate)
+             .Set(c => c.ContractFile, customer.ContractFile)
              .Set(c => c.Status, customer.Status);
 
         await _configmongoDb.CustomerCollection.UpdateOneAsync(filter, update);

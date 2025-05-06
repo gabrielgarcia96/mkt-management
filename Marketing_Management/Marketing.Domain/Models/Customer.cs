@@ -6,7 +6,9 @@ namespace Marketing.Domain.Models
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 
-        [BsonElement("customer_name")]
+        [BsonElement("social_reason")]
+        public string SocialReason { get; set; } = string.Empty;
+        [BsonElement("tradeName")]
         public string Name { get; set; } = string.Empty;
         [BsonElement("email")]
         public string Email { get; set; } = string.Empty;
@@ -27,7 +29,11 @@ namespace Marketing.Domain.Models
 
         [BsonElement("contract_end_date")]
         public DateTime ContractEndDate { get; set; } = DateTime.UtcNow.AddHours(-3);
-        [BsonElement("status")]
+
+        [BsonElement("ContractFile")]
+        public byte[]? ContractFile { get; set; }
+        
+
         public bool Status { get; set; }
     }
 }

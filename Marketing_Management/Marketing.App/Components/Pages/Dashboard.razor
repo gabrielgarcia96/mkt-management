@@ -108,7 +108,18 @@
 			Navigation.NavigateTo("/");
 			return;
 		}
+	}
 
+
+	protected override async Task OnInitializedAsync()
+	{
+		LangService.OnLanguageChanged += LanguageChanged;
+
+		await LoadDashboardData();
+	}
+
+	private async Task LoadDashboardData()
+	{
 		var companies = await CustomerService.GetAllCustomersAsync();
 		totalCompanies = companies.Count(c => c.Status == true);
 
@@ -117,7 +128,10 @@
 
 		var leads = await LeadService.GetAllAsync();
 		monthlyLeads = leads.Count();
+
+		StateHasChanged(); // força atualização visual
 	}
+
 
 	private void LanguageChanged()
 	{

@@ -31,6 +31,7 @@ public class CustomerService : ICustomerService
 
     public async Task RegisterCustomerAsync(Customer customer)
     {
+
         var existCustomer = await _customerRepository.GetCustomerCnpjAsync(customer.Cnpj);
 
         if (existCustomer != null)
@@ -45,6 +46,7 @@ public class CustomerService : ICustomerService
 
         var newCustomer = new Customer
         {
+            SocialReason = customer.SocialReason,
             Name = customer.Name,
             Email = customer.Email,
             Cnpj = customer.Cnpj,
@@ -55,9 +57,11 @@ public class CustomerService : ICustomerService
             TypeContract = customer.TypeContract,
             ContractStartDate = customer.ContractStartDate,
             ContractEndDate = customer.ContractEndDate,
+            ContractFile = customer.ContractFile,
             Status = customer.Status
         };
 
+        
         await _customerRepository.CreateCustomerAsync(newCustomer);
     }
 

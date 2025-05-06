@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Marketing.App.Security
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using Microsoft.AspNetCore.Components.Forms
 
 @page "/companies"
 
@@ -12,6 +13,8 @@
 @inject ICustomerService CustomerService
 @inject NotificationService notification
 @inject LanguageService LangService
+@inject IJSRuntime JS
+
 
 <style>
 	.matrix-modal-overlay {
@@ -28,8 +31,8 @@
 	}
 
 	.matrix-modal {
-		background-color: #38474e;
-		border: 2px solid #d4af37;
+	background-color: #38474e;
+	border: 2px solid #d4af37;
 	padding: 20px;
 	width: 400px;
 	color: #ffffff;
@@ -48,12 +51,12 @@
 	}
 
 	h2{
-		display: flex;
-		justify-content: center;
+	display: flex;
+	justify-content: center;
 	}
 	h3{
-		display: flex;
-		justify-content: center;
+	display: flex;
+	justify-content: center;
 	}
 </style>
 
@@ -69,8 +72,12 @@
 	<div class="matrix-modal-overlay">
 		<div class="matrix-modal">
 			<h3 style="color: #ffff;">@Loc.Get("RegisterNewCustomerText", currentLanguage)</h3>
-			<EditForm Model="@newCustomer" OnSubmit="@(isEditing ? UpdateCustomer : RegisterCustomer)"> @* OnValidSubmit="@RegisterCustomer"> *@
+			<EditForm Model="@newCustomer" OnValidSubmit="HandleSubmit">
 				<div class="form-grid">
+					<div class="form-grid-item">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("SocialReasonLabel", currentLanguage)</RadzenText>
+						<RadzenTextBox @bind-Value="newCustomer.SocialReason" style="width: 100%;" />
+					</div>
 					<div class="form-grid-item">
 						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("TradeNameLabel", currentLanguage)</RadzenText>
 						<RadzenTextBox @bind-Value="newCustomer.Name" style="width: 100%;" />
@@ -121,6 +128,11 @@
 						<RadzenDatePicker @bind-Value="newCustomer.ContractEndDate" style="width: 100%;" />
 					</div>
 
+					<div class="form-grid-item" style="grid-column: span 2;">
+						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">Contrato (arquivo)</RadzenText>
+						<InputFile OnChange="OnFileUpload" accept=".pdf,.txt,.docx,.doc" />
+
+					</div>
 
 					<div class="form-grid-item" style="grid-column: span 2;">
 						<RadzenCheckBox @bind-Value="newCustomer.Status" /> Active
@@ -136,8 +148,37 @@
 	</div>
 }
 
+@if (showReactivateModal)
+{
+	<div class="matrix-modal-overlay">
+		<div class="matrix-modal">
+			<h3 style="color: #ffff;">@Loc.Get("ReactivateCompany", currentLanguage)</h3>
+			<EditForm Model="@selectedInactiveCustomer" OnValidSubmit="ReactivateCustomer">
+				<div class="form-grid">
+					<div class="form-grid-item">
+						<RadzenText Style="color: white; font-weight: bold;">@Loc.Get("StartDate", currentLanguage)</RadzenText>
+						<RadzenDatePicker @bind-Value="selectedInactiveCustomer.ContractStartDate" style="width: 100%;" />
+					</div>
+					<div class="form-grid-item">
+						<RadzenText Style="color: white; font-weight: bold;">@Loc.Get("EndDate", currentLanguage)</RadzenText>
+						<RadzenDatePicker @bind-Value="selectedInactiveCustomer.ContractEndDate" style="width: 100%;" />
+					</div>
+					<div class="form-grid-item" style="grid-column: span 2;">
+						<RadzenText Style="color: white; font-weight: bold;">Contrato (arquivo)</RadzenText>
+						<InputFile OnChange="OnFileUpload" accept=".pdf,.txt,.docx,.doc" />
+					</div>
+				</div>
+				<RadzenButton Text="@Loc.Get("SaveButton", currentLanguage)" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Style="margin-top: 10px;" />
+				<RadzenButton Text="@Loc.Get("CancelButton", currentLanguage)" ButtonStyle="ButtonStyle.Light" Click="@(() => showReactivateModal = false)" Style="margin-top: 10px; margin-left: 10px;" />
+			</EditForm>
+		</div>
+	</div>
+}
+
+
 <RadzenDataGrid TItem="Customer" Style="margin-top: 20px;" PageSize="10" AllowPaging="true" AllowSorting="true" Data="@ListCustomer" ColumnWidth="400px">
 	<Columns>
+		<RadzenDataGridColumn Property="SocialReason" Title="@Loc.Get("SocialReasonLabel", currentLanguage)" Width="200px" />
 		<RadzenDataGridColumn Property="Name" Title="@Loc.Get("TradeNameLabel", currentLanguage)" Width="200px" />
 		<RadzenDataGridColumn Property="Cnpj" Title="Cnpj" Width="100px" />
 		<RadzenDataGridColumn Property="TypeContract" Title="@Loc.Get("TypeContractLabel", currentLanguage)" Width="100px" />
@@ -151,6 +192,25 @@
 				@customer.ContractEndDate.ToLocalTime().ToString("yyyy-MM-dd")
 			</Template>
 		</RadzenDataGridColumn>
+
+		<RadzenDataGridColumn Title="Contrato" Width="80px">
+			<Template Context="customer">
+				@if (customer.ContractFile != null && customer.ContractFile.Length > 0)
+				{
+					var base64File = Convert.ToBase64String(customer.ContractFile);
+					<RadzenButton Icon="description" Size="ButtonSize.Small"
+					Style="background-color: #007bff; color: white;"
+					Click="@(() => OpenContract(base64File))" />
+
+				}
+				else
+				{
+					<span>No contract file available</span>
+				}
+			</Template>
+		</RadzenDataGridColumn>
+
+
 		<RadzenDataGridColumn Property="Status" Title="Status" Width="100px" />
 
 		<RadzenDataGridColumn Title="@Loc.Get("ActionsLabel", currentLanguage)" Width="200px">
@@ -167,6 +227,7 @@
 
 <RadzenDataGrid TItem="Customer" PageSize="10" AllowPaging="true" AllowSorting="true" Data="@ListInactiveCustomers" ColumnWidth="400px">
 	<Columns>
+		<RadzenDataGridColumn Property="SocialReason" Title="@Loc.Get("SocialReasonLabel", currentLanguage)" Width="200px" />
 		<RadzenDataGridColumn Property="Name" Title="@Loc.Get("TradeNameLabel", currentLanguage)" Width="200px" />
 		<RadzenDataGridColumn Property="Cnpj" Title="Cnpj" Width="100px" />
 		<RadzenDataGridColumn Property="TypeContract" Title="@Loc.Get("TypeContractLabel", currentLanguage)" Width="100px" />
@@ -183,7 +244,8 @@
 		<RadzenDataGridColumn Title="@Loc.Get("ActionsLabel", currentLanguage)" Width="120px">
 			<Template Context="customer">
 				<RadzenButton Text="@Loc.Get("ActivateLabel", currentLanguage)" Icon="check" ButtonStyle="ButtonStyle.Success"
-							  Size="ButtonSize.Small" Click="@(args => ActivateCustomer(customer))" />
+				Click="@(() => OpenReactivateModal(customer))" />
+
 			</Template>
 		</RadzenDataGridColumn>
 	</Columns>
@@ -192,8 +254,10 @@
 
 @code {
 	private bool showModal = false;
+	bool showReactivateModal = false;
 	private bool isEditing = false;
 	private string submitButtonText = "Register";
+	Customer selectedInactiveCustomer = new Customer();
 	private Customer newCustomer = new();
 	private List<Customer> ListCustomer = new();
 	private List<Customer> ListInactiveCustomers = new();
@@ -259,6 +323,7 @@
 	{
 		newCustomer = new Customer
 			{
+				SocialReason = customer.SocialReason,
 				Name = customer.Name,
 				Email = customer.Email,
 				Cnpj = customer.Cnpj,
@@ -269,6 +334,7 @@
 				TypeContract = customer.TypeContract,
 				ContractStartDate = customer.ContractStartDate,
 				ContractEndDate = customer.ContractEndDate,
+				ContractFile = customer.ContractFile,
 				Status = customer.Status
 			};
 
@@ -337,6 +403,85 @@
 		notification.Notify(Radzen.NotificationSeverity.Success,"Companie, Active Successfully!");
 		await LoadCompaniesAsync();
 
-}
+	}
+
+	private async Task OnFileUpload(InputFileChangeEventArgs e)
+	{
+		try
+		{
+			var file = e.File;
+			if (file != null)
+			{
+				long maxSize = 5 * 1024 * 1024; 
+
+				if (file.Size > maxSize)
+				{
+					notification.Notify(Radzen.NotificationSeverity.Error, "Erro", "O arquivo excede o tamanho máximo permitido (5 MB).");
+					return;
+				}
+
+				using var stream = new MemoryStream();
+				await file.OpenReadStream(maxSize).CopyToAsync(stream);
+
+
+				newCustomer.ContractFile = stream.ToArray();
+				selectedInactiveCustomer.ContractFile = stream.ToArray();
+
+				notification.Notify(Radzen.NotificationSeverity.Success, "Arquivo carregado com sucesso!");
+			}
+		}
+		catch (Exception ex)
+		{
+			notification.Notify(Radzen.NotificationSeverity.Error, "Erro ao carregar o arquivo!");
+			Console.WriteLine(ex);
+		}
+	}
+
+
+
+	private async Task OpenContract(string base64File)
+	{
+		string fileName = "Contrato_Empresa.pdf";
+		string mimeType = "application/pdf"; 
+
+		await JS.InvokeVoidAsync("openBase64File", base64File, fileName, mimeType);
+	}
+
+	private async Task HandleSubmit()
+	{
+		if (isEditing)
+			await UpdateCustomer();
+		else
+			await RegisterCustomer();
+	}
+
+	void OpenReactivateModal(Customer customer)
+	{
+		selectedInactiveCustomer = customer;
+		showReactivateModal = true;
+	}
+
+	private async Task ReactivateCustomer()
+	{
+		if (selectedInactiveCustomer != null)
+		{
+			selectedInactiveCustomer.Status = true;  // Define o status como ativo
+
+			await CustomerService.UpdateCustomerAsync(selectedInactiveCustomer.Cnpj, selectedInactiveCustomer);
+
+			notification.Notify(Radzen.NotificationSeverity.Success, "Success", "Company reactivated successfully!");
+
+			showReactivateModal = false;
+
+			// Recarregar a lista de empresas após a reativação
+			await LoadCompaniesAsync();
+		}
+	}
+
+
+
+
+
+	
 
 }

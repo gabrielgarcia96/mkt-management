@@ -2,43 +2,43 @@
 @using Marketing.App.Security
 @using Marketing.Application.Interfaces
 @using Marketing.Domain.Models
-
+@using Marketing.Domain.Enums
 @inject ILeadService LeadService
 @inject NotificationService notification
 @inject LanguageService LangService
 
 <style>
     .matrix-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
     }
 
     .matrix-modal {
         background-color: #38474e;
         border: 2px solid #d4af37;
-    padding: 20px;
-    width: 500px;
-    color: #ffffff;
-    border-radius: 8px;
+        padding: 20px;
+        width: 500px;
+        color: #ffffff;
+        border-radius: 8px;
     }
 
     .form-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .form-grid-item {
-    display: flex;
-    flex-direction: column;
+        display: flex;
+        flex-direction: column;
     }
 
     h2 {
@@ -71,6 +71,18 @@
                         <RadzenText style="color:white; font-weight:bold;">@Loc.Get("PhoneNumberLabel", currentLanguage)</RadzenText>
                         <RadzenTextBox @bind-Value="newLead.Phone" Style="width:100%" />
                     </div>
+                    <div class="form-grid-item">
+                        <RadzenText style="color:white; font-weight:bold;">Observação</RadzenText>
+                        <RadzenTextArea @bind-Value="newLead.Observation" Style="width:100%" />
+                    </div>
+                    <RadzenDropDown TValue="Status"
+                                    Style="width:100%"
+                                    Data="@statusOptions"
+                                    TextProperty="Text"
+                                    ValueProperty="Value"
+                                    @bind-Value="newLead.Status" />
+
+               
                 </div>
                 <RadzenButton Text="@Loc.Get("SaveButton", currentLanguage)" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Style="margin-top:10px;" />
                 <RadzenButton Text="@Loc.Get("CancelButton", currentLanguage)" Click="@(() => showModal = false)" ButtonStyle="ButtonStyle.Light" Style="margin-top:10px; margin-left:10px;" />
@@ -84,6 +96,12 @@
         <RadzenDataGridColumn Property="FullName" Title="@Loc.Get("FullNameLabel", currentLanguage)" />
         <RadzenDataGridColumn Property="Email" Title="Email" />
         <RadzenDataGridColumn Property="Phone" Title="@Loc.Get("PhoneNumberLabel", currentLanguage)" />
+        <RadzenDataGridColumn Property="Observation" Title="@Loc.Get("ObservationLabel", currentLanguage)" />
+        <RadzenDataGridColumn Property="Status" Title="Status">
+            <Template Context="lead">
+                @GetStatusText(lead.Status)
+            </Template>
+        </RadzenDataGridColumn>
         <RadzenDataGridColumn Property="CreatedAt" Title="@Loc.Get("DateRegisterLabel", currentLanguage)">
             <Template Context="lead">@lead.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</Template>
         </RadzenDataGridColumn>
@@ -101,10 +119,20 @@
     private bool showModal = false;
     private string currentLanguage => LangService.CurrentLanguage;
 
+    private List<StatusOption> statusOptions;
+
     protected override async Task OnInitializedAsync()
     {
         LangService.OnLanguageChanged += LanguageChanged;
         leads = await LeadService.GetAllAsync();
+
+        // Carregar as opções de status com tradução
+        statusOptions = new()
+        {
+            new StatusOption { Value = Status.nopotential, Text = Loc.Get("NoPotentialLabel", currentLanguage) },
+            new StatusOption { Value = Status.potential, Text = Loc.Get("PotentialLabel", currentLanguage) },
+            new StatusOption { Value = Status.verypotential, Text = Loc.Get("VeryPotentialLabel", currentLanguage) }
+        };
     }
 
     private async Task RegisterLead()
@@ -127,11 +155,34 @@
 
     private void LanguageChanged()
     {
+        // Atualizar as opções de status ao mudar a linguagem
+        statusOptions = new()
+        {
+            new StatusOption { Value = Status.nopotential, Text = Loc.Get("NoPotentialLabel", currentLanguage) },
+            new StatusOption { Value = Status.potential, Text = Loc.Get("PotentialLabel", currentLanguage) },
+            new StatusOption { Value = Status.verypotential, Text = Loc.Get("VeryPotentialLabel", currentLanguage) }
+        };
+
         StateHasChanged();
     }
 
     public void Dispose()
     {
         LangService.OnLanguageChanged -= LanguageChanged;
+    }
+
+    private string GetStatusText(Status status)
+    {
+        switch (status)
+        {
+            case Status.nopotential:
+                return Loc.Get("NoPotentialLabel", currentLanguage);
+            case Status.potential:
+                return Loc.Get("PotentialLabel", currentLanguage);
+            case Status.verypotential:
+                return Loc.Get("VeryPotentialLabel", currentLanguage);
+            default:
+                return string.Empty; // Caso padrão, caso o status não seja reconhecido
+        }
     }
 }

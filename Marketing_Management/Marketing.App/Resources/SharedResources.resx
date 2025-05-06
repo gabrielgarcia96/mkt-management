@@ -232,7 +232,7 @@
     <value>Go to register</value>
   </data>
   <data name="RegisterNewCustomerText" xml:space="preserve">
-    <value>Register New Customer</value>
+    <value>Register New Companie</value>
   </data>
   <data name="RegisterNewLeadLabel" xml:space="preserve">
     <value>Register New Lead</value>
@@ -272,5 +272,20 @@
   </data>
   <data name="ActionsLabel" xml:space="preserve">
     <value>Actions</value>
+  </data>
+  <data name="SocialReasonLabel" xml:space="preserve">
+    <value>Social Reason</value>
+  </data>
+  <data name="ObservationLabel" xml:space="preserve">
+    <value>Observation</value>
+  </data>
+  <data name="NoPotentialLabel" xml:space="preserve">
+    <value>No Potential</value>
+  </data>
+  <data name="PotentialLabel" xml:space="preserve">
+    <value>Potential</value>
+  </data>
+  <data name="VeryPotentialLabel" xml:space="preserve">
+    <value>Lots of potential</value>
   </data>
 </root>

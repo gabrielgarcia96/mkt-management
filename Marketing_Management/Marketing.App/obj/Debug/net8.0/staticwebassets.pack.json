@@ -1,23 +1,23 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Marketing.App.bundle.scp.css",
+      "Id": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Marketing.App.bundle.scp.css",
       "PackagePath": "staticwebassets\\Marketing.App.jpbph7ebej.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\app.css",
+      "Id": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
     {
-      "Id": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Id": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Id": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\gabriel.garcia\\source\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\favicon.png",
+      "Id": "C:\\Github\\mkt-management\\Marketing_Management\\Marketing.App\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {
