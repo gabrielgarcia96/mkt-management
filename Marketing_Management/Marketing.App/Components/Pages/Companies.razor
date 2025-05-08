@@ -120,12 +120,12 @@
 
 					<div class="form-grid-item">
 						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("StartDate", currentLanguage)</RadzenText>
-						<RadzenDatePicker @bind-Value="newCustomer.ContractStartDate" style="width: 100%;" />
+						<RadzenDatePicker @bind-Value="newCustomer.ContractStartDate" DateFormat="dd/MM/yyyy" style="width: 65%;" />
 					</div>
 
 					<div class="form-grid-item">
 						<RadzenText Style="color: #ffff; font-size: 14px; font-weight: bold;">@Loc.Get("EndDate", currentLanguage)</RadzenText>
-						<RadzenDatePicker @bind-Value="newCustomer.ContractEndDate" style="width: 100%;" />
+						<RadzenDatePicker @bind-Value="newCustomer.ContractEndDate" DateFormat="dd/MM/yyyy" style="width: 65%;" />
 					</div>
 
 					<div class="form-grid-item" style="grid-column: span 2;">
@@ -157,11 +157,11 @@
 				<div class="form-grid">
 					<div class="form-grid-item">
 						<RadzenText Style="color: white; font-weight: bold;">@Loc.Get("StartDate", currentLanguage)</RadzenText>
-						<RadzenDatePicker @bind-Value="selectedInactiveCustomer.ContractStartDate" style="width: 100%;" />
+						<RadzenDatePicker @bind-Value="selectedInactiveCustomer.ContractStartDate" DateFormat="dd/MM/yyyy" style="width: 65%;" />
 					</div>
 					<div class="form-grid-item">
 						<RadzenText Style="color: white; font-weight: bold;">@Loc.Get("EndDate", currentLanguage)</RadzenText>
-						<RadzenDatePicker @bind-Value="selectedInactiveCustomer.ContractEndDate" style="width: 100%;" />
+						<RadzenDatePicker @bind-Value="selectedInactiveCustomer.ContractEndDate" DateFormat="dd/MM/yyyy" style="width: 65%;" />
 					</div>
 					<div class="form-grid-item" style="grid-column: span 2;">
 						<RadzenText Style="color: white; font-weight: bold;">Contrato (arquivo)</RadzenText>
@@ -184,12 +184,12 @@
 		<RadzenDataGridColumn Property="TypeContract" Title="@Loc.Get("TypeContractLabel", currentLanguage)" Width="100px" />
 		<RadzenDataGridColumn Property="ContractStartDate" Title="@Loc.Get("StartDate", currentLanguage)" Width="100px">
 			<Template Context="customer">
-				@customer.ContractStartDate.ToLocalTime().ToString("yyyy-MM-dd")
+				@customer.ContractStartDate.ToLocalTime().ToString("dd/MM/yyyy")
 			</Template>
 		</RadzenDataGridColumn>
 		<RadzenDataGridColumn Property="ContractEndDate" Title="@Loc.Get("EndDate", currentLanguage)" Width="100px">
 			<Template Context="customer">
-				@customer.ContractEndDate.ToLocalTime().ToString("yyyy-MM-dd")
+				@customer.ContractEndDate.ToLocalTime().ToString("dd/MM/yyyy")
 			</Template>
 		</RadzenDataGridColumn>
 
@@ -233,12 +233,12 @@
 		<RadzenDataGridColumn Property="TypeContract" Title="@Loc.Get("TypeContractLabel", currentLanguage)" Width="100px" />
 		<RadzenDataGridColumn Property="ContractStartDate" Title="@Loc.Get("StartDate", currentLanguage)" Width="100px">
 			<Template Context="customer">
-				@customer.ContractStartDate.ToLocalTime().ToString("yyyy-MM-dd")
+				@customer.ContractStartDate.ToLocalTime().ToString("dd/MM/yyyy")
 			</Template>
 		</RadzenDataGridColumn>
 		<RadzenDataGridColumn Property="ContractEndDate" Title="@Loc.Get("EndDate", currentLanguage)" Width="100px">
 			<Template Context="customer">
-				@customer.ContractEndDate.ToLocalTime().ToString("yyyy-MM-dd")
+				@customer.ContractEndDate.ToLocalTime().ToString("dd/MM/yyyy")
 			</Template>
 		</RadzenDataGridColumn>
 		<RadzenDataGridColumn Title="@Loc.Get("ActionsLabel", currentLanguage)" Width="120px">
@@ -262,6 +262,8 @@
 	private List<Customer> ListCustomer = new();
 	private List<Customer> ListInactiveCustomers = new();
 	private string currentLanguage => LangService.CurrentLanguage;
+	private IBrowserFile uploadedFile;
+
 
 
 	protected override async Task OnInitializedAsync()
@@ -282,6 +284,9 @@
 			notification.Notify(Radzen.NotificationSeverity.Error, "Erro", "Cnpj already exists!");
 			return;
 		}
+
+		newCustomer.ContractStartDate = newCustomer.ContractStartDate.Date;
+		newCustomer.ContractEndDate = newCustomer.ContractEndDate.Date;
 
 		await CustomerService.RegisterCustomerAsync(newCustomer);
 
@@ -409,19 +414,20 @@
 	{
 		try
 		{
-			var file = e.File;
-			if (file != null)
+			uploadedFile = e.File;
+
+			if (uploadedFile != null)
 			{
 				long maxSize = 5 * 1024 * 1024; 
 
-				if (file.Size > maxSize)
+				if (uploadedFile.Size > maxSize)
 				{
 					notification.Notify(Radzen.NotificationSeverity.Error, "Erro", "O arquivo excede o tamanho máximo permitido (5 MB).");
 					return;
 				}
 
 				using var stream = new MemoryStream();
-				await file.OpenReadStream(maxSize).CopyToAsync(stream);
+				await uploadedFile.OpenReadStream(maxSize).CopyToAsync(stream);
 
 
 				newCustomer.ContractFile = stream.ToArray();
@@ -429,6 +435,7 @@
 
 				notification.Notify(Radzen.NotificationSeverity.Success, "Arquivo carregado com sucesso!");
 			}
+
 		}
 		catch (Exception ex)
 		{
@@ -449,6 +456,12 @@
 
 	private async Task HandleSubmit()
 	{
+		if(uploadedFile == null)
+		{
+			notification.Notify(Radzen.NotificationSeverity.Warning, "Warning", "Attach file!");
+			return;
+		}
+
 		if (isEditing)
 			await UpdateCustomer();
 		else
@@ -458,14 +471,23 @@
 	void OpenReactivateModal(Customer customer)
 	{
 		selectedInactiveCustomer = customer;
+		uploadedFile = null;
 		showReactivateModal = true;
 	}
 
 	private async Task ReactivateCustomer()
 	{
+		
+		if (uploadedFile == null)
+		{
+			notification.Notify(Radzen.NotificationSeverity.Warning, "Warning", "Attach file!");
+			return;
+		}
+
 		if (selectedInactiveCustomer != null)
 		{
-			selectedInactiveCustomer.Status = true;  // Define o status como ativo
+			
+			selectedInactiveCustomer.Status = true;
 
 			await CustomerService.UpdateCustomerAsync(selectedInactiveCustomer.Cnpj, selectedInactiveCustomer);
 
@@ -473,15 +495,7 @@
 
 			showReactivateModal = false;
 
-			// Recarregar a lista de empresas após a reativação
 			await LoadCompaniesAsync();
 		}
 	}
-
-
-
-
-
-	
-
 }
