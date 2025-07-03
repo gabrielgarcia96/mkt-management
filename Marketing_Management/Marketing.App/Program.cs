@@ -70,6 +70,7 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ICampaignService, CampaignService>();
 builder.Services.AddScoped<ILeadService, LeadService>();
+builder.Services.AddScoped<ImportService>();
 
 // Builder Repositorys
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();

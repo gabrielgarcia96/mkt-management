@@ -71,12 +71,6 @@ C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Market
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\staticwebassets\msbuild.Marketing.App.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\staticwebassets\msbuild.Marketing.App.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\staticwebassets\msbuild.build.Marketing.App.props
-C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Marketing.App.props
-C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Marketing.App.props
-C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\staticwebassets.pack.json
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Marketin.FAC56E7B.Up2Date
 C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Marketing.App.dll
@@ -180,3 +174,8 @@ C:\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Mar
 C:\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Marketing.App.Resources.SharedResources.pt.resources
 C:\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\Marketing.App.csproj.GenerateResource.cache
 C:\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\pt\Marketing.App.resources.dll
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\gabriel.garcia\source\Github\mkt-management\Marketing_Management\Marketing.App\obj\Debug\net8.0\staticwebassets.build.json.cache

@@ -1,49 +1,51 @@
 ﻿@page "/leads"
 @using Marketing.App.Security
 @using Marketing.Application.Interfaces
+@using Marketing.Application.Services
 @using Marketing.Domain.Models
 @using Marketing.Domain.Enums
 @inject ILeadService LeadService
 @inject NotificationService notification
 @inject LanguageService LangService
+@inject ImportService ImportService
 
 <style>
     .matrix-modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: rgba(0, 0, 0, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
     }
 
     .matrix-modal {
-        background-color: #38474e;
-        border: 2px solid #d4af37;
-        padding: 20px;
-        width: 500px;
-        color: #ffffff;
-        border-radius: 8px;
+    background-color: #38474e;
+    border: 2px solid #d4af37;
+    padding: 20px;
+    width: 500px;
+    color: #ffffff;
+    border-radius: 8px;
     }
 
     .form-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 16px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
     }
 
     .form-grid-item {
-        display: flex;
-        flex-direction: column;
+    display: flex;
+    flex-direction: column;
     }
 
     h2 {
-        display: flex;
-        justify-content: center;
+    display: flex;
+    justify-content: center;
     }
 
 </style>
@@ -51,6 +53,14 @@
 <h2 style="color:#ffffff;">@Loc.Get("LeadTitle", currentLanguage)</h2>
 
 <RadzenButton Text="@Loc.Get("NewLeadButton", currentLanguage)" Click="ShowModal" ButtonStyle="ButtonStyle.Success" />
+<RadzenButton Text="Import" Click="ShowImportModal" ButtonStyle="ButtonStyle.Info" Style="margin-left:10px;" />
+<RadzenButton Text="Excluir Selecionados"
+Click="DeleteSelectedLeads"
+ButtonStyle="ButtonStyle.Danger"
+Disabled="@(!selectedLeadIds.Any())"
+Style="margin-left:10px;" />
+
+
 
 @if (showModal)
 {
@@ -59,6 +69,8 @@
             <h3 style="color:#ffffff;">@Loc.Get("RegisterNewLeadLabel", currentLanguage)</h3>
             <EditForm Model="@newLead" OnValidSubmit="@RegisterLead">
                 <div class="form-grid">
+                    <div class="form-grid-item">
+                    </div>
                     <div class="form-grid-item">
                         <RadzenText style="color:white; font-weight:bold;">@Loc.Get("FullNameLabel", currentLanguage)</RadzenText>
                         <RadzenTextBox @bind-Value="newLead.FullName" Style="width:100%" />
@@ -76,13 +88,13 @@
                         <RadzenTextArea @bind-Value="newLead.Observation" Style="width:100%" />
                     </div>
                     <RadzenDropDown TValue="Status"
-                                    Style="width:100%"
-                                    Data="@statusOptions"
-                                    TextProperty="Text"
-                                    ValueProperty="Value"
-                                    @bind-Value="newLead.Status" />
+                    Style="width:100%"
+                    Data="@statusOptions"
+                    TextProperty="Text"
+                    ValueProperty="Value"
+                    @bind-Value="newLead.Status" />
 
-               
+
                 </div>
                 <RadzenButton Text="@Loc.Get("SaveButton", currentLanguage)" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Style="margin-top:10px;" />
                 <RadzenButton Text="@Loc.Get("CancelButton", currentLanguage)" Click="@(() => showModal = false)" ButtonStyle="ButtonStyle.Light" Style="margin-top:10px; margin-left:10px;" />
@@ -91,8 +103,40 @@
     </div>
 }
 
+@if (showImportModal)
+{
+    <div class="matrix-modal-overlay">
+        <div class="matrix-modal">
+            <h3>Importar Leads</h3>
+            <EditForm Model="@importText" OnValidSubmit="SubmitImport">
+                <div class="form-grid">
+                    <div class="form-grid-item">
+                        <RadzenTextArea @bind-Value="importText" Placeholder="nome1;email1@example.com&#10;nome2;email2@example.com" Rows="8" Style="width:100%" />
+                    </div>
+                </div>
+                <RadzenButton Text="Importar" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Style="margin-top:10px;" />
+                <RadzenButton Text="Cancelar" Click="@(() => showImportModal = false)" ButtonStyle="ButtonStyle.Light" Style="margin-top:10px; margin-left:10px;" />
+            </EditForm>
+        </div>
+    </div>
+}
+
+
 <RadzenDataGrid Style="margin-top: 20px;" TItem="Lead" Data="@leads" AllowPaging="true" AllowSorting="true" PageSize="10">
     <Columns>
+        <RadzenDataGridColumn>
+            <HeaderTemplate>
+                <RadzenCheckBox TValue="bool"
+                                @bind-Value="selectAll"
+                                Change="SelectAllChanged"
+                                Style="margin-right: 8px;" />
+                Action
+			</HeaderTemplate>
+            <Template Context="l">
+                <RadzenCheckBox TValue="bool" Value="@selectedLeadIds.Contains(l.Id)"
+                Change="@(args => ToggleSelection(args, l.Id))"/>
+            </Template>
+        </RadzenDataGridColumn>
         <RadzenDataGridColumn Property="FullName" Title="@Loc.Get("FullNameLabel", currentLanguage)" />
         <RadzenDataGridColumn Property="Email" Title="Email" />
         <RadzenDataGridColumn Property="Phone" Title="@Loc.Get("PhoneNumberLabel", currentLanguage)" />
@@ -118,8 +162,15 @@
     private Lead newLead = new();
     private bool showModal = false;
     private string currentLanguage => LangService.CurrentLanguage;
-
+    private bool showImportModal = false;
+    private string importText = string.Empty;
     private List<StatusOption> statusOptions;
+    private HashSet<string> selectedLeadIds = new();
+    private bool selectAll;
+
+
+    private void ShowModal() => showModal = true;
+    private void ShowImportModal() => showImportModal = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -151,7 +202,37 @@
         leads = await LeadService.GetAllAsync();
     }
 
-    private void ShowModal() => showModal = true;
+    private async Task DeleteSelectedLeads()
+    {
+        foreach (var id in selectedLeadIds)
+        {
+            await LeadService.DeleteAsync(id);
+        }
+
+        notification.Notify(Radzen.NotificationSeverity.Success, "Sucesso", "Leads selecionados foram removidos.");
+        selectedLeadIds.Clear();
+        leads = await LeadService.GetAllAsync();
+    }
+
+
+    private void ToggleSelection(bool isSelected, string id)
+    {
+        if (isSelected)
+            selectedLeadIds.Add(id);
+        else
+            selectedLeadIds.Remove(id);
+    }
+
+    private void SelectAllChanged(bool value)
+    {
+        selectAll = value;
+
+        if (selectAll)
+            selectedLeadIds = leads.Select(l => l.Id).ToHashSet();
+        else
+            selectedLeadIds.Clear();
+    }
+
 
     private void LanguageChanged()
     {
@@ -182,7 +263,19 @@
             case Status.verypotential:
                 return Loc.Get("VeryPotentialLabel", currentLanguage);
             default:
-                return string.Empty; // Caso padrão, caso o status não seja reconhecido
+                return string.Empty; 
         }
+    }
+
+    
+
+
+    private async Task SubmitImport()
+    {
+        await ImportService.ImportLeads(importText);
+        showImportModal = false;
+        importText = string.Empty;
+        notification.Notify(Radzen.NotificationSeverity.Success, "Importado", "Leads importados com sucesso!");
+        leads = await LeadService.GetAllAsync();
     }
 }
